@@ -105,8 +105,8 @@ class SchedulePanel extends JPanel {
 				gbc.gridy = y;
 				JPanel a = new JPanel();
 				a.setBorder(blackline);
-				button.setBackground(Color.BLACK);
-				button.setOpaque(false);
+				a.setBackground(Color.BLACK);
+				a.setOpaque(false);
 				add(a,gbc);
 			}
 		}
