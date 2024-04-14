@@ -110,41 +110,7 @@ class SchedulePanel extends JPanel {
 				add(a,gbc);
 			}
 		}
-
-
-
 		this.setBackground(Color.LIGHT_GRAY);
-		
-		/* 
-		add(new JLabel("8:00"),gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		add(new JLabel("8:30"),gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		add(new JLabel("10:00"),gbc);
-
-
-		add(new JLabel("10:30"));
-		add(new JLabel("11:00"));
-		add(new JLabel("11:30"));
-		add(new JLabel("12:00"));
-		add(new JLabel("12:30"));
-		add(new JLabel("1:00"));
-		add(new JLabel("1:30"));
-		add(new JLabel("2:00"));
-		add(new JLabel("2:30"));
-		add(new JLabel("3:00"));
-		add(new JLabel("3:30"));
-		add(new JLabel("4:00"));
-		add(new JLabel("4:30"));
-		add(new JLabel("5:00"));
-		add(new JLabel("5:30"));
-		add(new JLabel("6:00"));
-		add(new JLabel("6:30"));
-		add(new JLabel("7:00"));
-		add(new JLabel("7:30"));
-		add(new JLabel("8:00"));		*/
 	}
 }
 
