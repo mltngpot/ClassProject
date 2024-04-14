@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.*;
+import javax.swing.border.*;
 
 public class Main{
     public static void main(String[] args) {
@@ -40,8 +41,10 @@ class SchedulePanel extends JPanel {
 		gbc.weighty = 0.2;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.fill = GridBagConstraints.BOTH;
-		gbc.insets = new Insets(10,3,10,3);
-
+		gbc.insets = new Insets(2,2,2,2);
+		Border blackline;
+		blackline = BorderFactory.createLineBorder(Color.black);
+		this.setBorder(blackline);
 
 		try {
 			String time = "7:30";
@@ -53,7 +56,8 @@ class SchedulePanel extends JPanel {
 			for (int x = 1; x <= 25; x++){
 				cal.add(Calendar.MINUTE, interval);
 				gbc.gridy = x;
-				add(new JLabel(df.format(cal.getTime())),gbc);
+				JLabel timeLabel = new JLabel(df.format(cal.getTime()));
+				add(timeLabel,gbc);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -94,13 +98,16 @@ class SchedulePanel extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.gridheight = 1;
-		add(new JButton(),gbc);
 
 		for (int x = 1; x <= 7; x++){
 			for (int y = 1; y <= 25; y++){
 				gbc.gridx = x;
 				gbc.gridy = y;
-				add(new JButton(),gbc);
+				JPanel a = new JPanel();
+				a.setBorder(blackline);
+				button.setBackground(Color.BLACK);
+				button.setOpaque(false);
+				add(a,gbc);
 			}
 		}
 
@@ -146,7 +153,7 @@ class MainPanel extends JPanel{
 		BorderLayout layout = new BorderLayout();
 		setLayout(layout);
 		
-		 add(new SchedulePanel(), BorderLayout.WEST); //might need to change to center later on
+		 add(new SchedulePanel(), BorderLayout.CENTER); //might need to change to center later on
 
 
 	}
