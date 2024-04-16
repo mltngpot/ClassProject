@@ -1,13 +1,15 @@
-package dialogs;
+/**
+ *
+ * @author Jacob DeMuth
+ */
+
+package com.cs51540.dialogs;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-/**
- *
- * @author Jacob DeMuth
- */
+
 public class EditDialog extends JFrame {
     public EditDialog()
     {
