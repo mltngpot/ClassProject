@@ -1,7 +1,7 @@
 /**
-*
-* @author Jacob DeMuth
-*/
+ *
+ * @author Jacob DeMuth
+ */
 
 package com.cs51540.dialogs;
 
