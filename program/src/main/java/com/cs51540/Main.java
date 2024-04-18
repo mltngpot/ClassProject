@@ -103,7 +103,7 @@ class SchedulePanel extends JPanel {
 			for (int y = 1; y <= 25; y++){
 				gbc.gridx = x;
 				gbc.gridy = y;
-				JPanel a = new JPanel();
+				JButton a = new JButton();
 				a.setBorder(blackline);
 				a.setBackground(Color.BLACK);
 				a.setOpaque(false);
@@ -118,8 +118,7 @@ class MainPanel extends JPanel{
 	public MainPanel(){
 		BorderLayout layout = new BorderLayout();
 		setLayout(layout);
-		
-		 add(new SchedulePanel(), BorderLayout.CENTER); //might need to change to center later on
+		 add(new SchedulePanel(), BorderLayout.CENTER);
 
 
 	}
