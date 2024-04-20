@@ -3,6 +3,11 @@ package com.cs51540.views;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.xml.crypto.Data;
+
+import com.cs51540.interfaces.IDataRepository;
+import com.cs51540.models.User;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,8 +17,13 @@ public class SchedulePanel extends JPanel {
     private final JButton[][] buttons = new JButton[7][25];
     GridBagLayout gbl = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
-    public SchedulePanel() {
+    private User CurrentUser;
+    private IDataRepository DataRepository;
+
+    public SchedulePanel(IDataRepository DataRepository) {
         this.eventListener = new EventListener();
+        this.DataRepository = DataRepository;
+        CurrentUser = DataRepository.GetUser(0); //TODO Hard coded to 0, need to be able to change
         setupSchedule();
     }
 
@@ -68,12 +78,11 @@ public class SchedulePanel extends JPanel {
                 JButton button = new JButton();
                 button.setBorder(blackline);
                 button.setBackground(Color.WHITE);
-                button.setOpaque(false);
+                button.setOpaque(true);
                 add(button, gbc);
                 buttons[x - 1][y - 1] = button;
                 int day = x - 1;  // Day calculation
                 int startTime = y - 1;  // Start time calculation
-                //int endTime = startTime + 1;  // End time calculation
                 button.addActionListener(e -> {
                     String eventName = JOptionPane.showInputDialog(null, "Enter event name:");
                     String eventEnd = JOptionPane.showInputDialog(null, "Enter event end time:");
@@ -103,7 +112,7 @@ public class SchedulePanel extends JPanel {
                     gbc.gridy = slot + 1;
                     gbc.gridheight = 1;  //Change according to meeting length - Kenneth (Make a for loop later for this shit)
                     gbl.setConstraints(button,gbc);
-					button.setBackground(Color.YELLOW); // Set background color for events
+					button.setBackground(CurrentUser.DisplayColor); // Set background color for events
 				} else {
 					button.setText(""); // Clear text if no event
 					button.setBackground(Color.WHITE); // Set default background color
