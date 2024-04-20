@@ -1,10 +1,9 @@
 package com.cs51540.data;
 
 import java.awt.Color;
-import java.time.LocalDate;
 import java.time.DayOfWeek;
-import java.util.Arrays;
-import java.util.Vector;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
@@ -12,8 +11,8 @@ import com.cs51540.models.User;
 
 public class TestDataRepository implements IDataRepository {
 
-    private User[] Users;
-    private Vector<Schedule> Schedules;
+    private final User[] Users;
+    private final ArrayList<Schedule> Schedules;
 
     public TestDataRepository() {
         Users = new User[4];
@@ -25,39 +24,25 @@ public class TestDataRepository implements IDataRepository {
         Schedules = GenerateSchedules(LocalDate.now());
     }
 
-    private Vector<Schedule> GenerateSchedules(LocalDate weekOfDate) {
-        Vector<Schedule> schedules = new Vector<Schedule>();
+    private ArrayList<Schedule> GenerateSchedules(LocalDate weekOfDate) {
+        ArrayList<Schedule> schedules = new ArrayList<>();
         DayOfWeek dayOfWeek = weekOfDate.getDayOfWeek();
         LocalDate sunday = null;
         switch(dayOfWeek) {
-            case SUNDAY:
-                sunday = weekOfDate;
-                break;
-            case MONDAY:
-                sunday = weekOfDate.minusDays(1);
-                break;
-            case TUESDAY:
-                sunday = weekOfDate.minusDays(2);
-                break;
-            case WEDNESDAY:
-                sunday = weekOfDate.minusDays(3);
-                break;
-            case THURSDAY:
-                sunday = weekOfDate.minusDays(4);
-                break;
-            case FRIDAY:
-                sunday = weekOfDate.minusDays(5);
-                break;
-            case SATURDAY:
-                sunday = weekOfDate.minusDays(6);
-                break;
+            case SUNDAY -> sunday = weekOfDate;
+            case MONDAY -> sunday = weekOfDate.minusDays(1);
+            case TUESDAY -> sunday = weekOfDate.minusDays(2);
+            case WEDNESDAY -> sunday = weekOfDate.minusDays(3);
+            case THURSDAY -> sunday = weekOfDate.minusDays(4);
+            case FRIDAY -> sunday = weekOfDate.minusDays(5);
+            case SATURDAY -> sunday = weekOfDate.minusDays(6);
         }
         schedules.addAll(getMeals(sunday));
 
         return schedules;
     }
 
-    private Vector<Schedule> getMeals(LocalDate day) {
+    private ArrayList<Schedule> getMeals(LocalDate day) {
         Schedule breakfast = new Schedule(0, 0, "Breakfast", day.atTime(7, 00), day.atTime(7, 30) );
         Schedule secondBreakfast = new Schedule(0, 0, "Second Breakfast", day.atTime(9, 00), day.atTime(9, 30) );
         Schedule elevensies = new Schedule(0, 0, "Elevenses", day.atTime(11, 00), day.atTime(11, 45) );
@@ -70,7 +55,7 @@ public class TestDataRepository implements IDataRepository {
         breakfast.AddAddendee(2);
         breakfast.AddAddendee(3);
         
-        Vector<Schedule> meals = new Vector<>();
+        ArrayList<Schedule> meals = new ArrayList<>();
         meals.add(breakfast);
         meals.add(secondBreakfast);
         meals.add(elevensies);
@@ -101,24 +86,24 @@ public class TestDataRepository implements IDataRepository {
 
     @Override
     public void UpdateSchedule(Schedule schedule) {
-        Schedules.remove(schedule.Id);
+        Schedules.remove(schedule);
         Schedules.add(schedule.Id, schedule);
     }
 
     @Override
     public Schedule GetSchedule(Integer scheduleId) {
-        return Schedules.elementAt(scheduleId);
+        return Schedules.get(scheduleId);
     }
 
     @Override
     public Schedule[] GetUserSchedule(Integer userId) {
-        Vector<Schedule> usersSchedule = new Vector<Schedule>();
+        ArrayList<Schedule> usersSchedule = new ArrayList<>();
         for (Schedule schedule : Schedules) {
             if(schedule.Owner.equals(userId)) {
                 usersSchedule.add(schedule);
                 continue;
             }
-            if(Arrays.asList(schedule.Attendees).contains(userId))
+            if(schedule.Attendees.contains(userId))
             {
                 usersSchedule.add(schedule);
             }
@@ -131,7 +116,7 @@ public class TestDataRepository implements IDataRepository {
 
     @Override
     public Schedule[] GetWeekSchedule(LocalDate weekOfDate) {
-        Vector<Schedule> weekSchedule = GenerateSchedules(weekOfDate);
+        ArrayList<Schedule> weekSchedule = GenerateSchedules(weekOfDate);
         Schedule[] tempArray = new Schedule[weekSchedule.size()];
         weekSchedule.toArray(tempArray);
         return tempArray;
