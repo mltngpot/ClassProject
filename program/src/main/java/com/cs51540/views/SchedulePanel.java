@@ -78,7 +78,6 @@ public class SchedulePanel extends JPanel {
                     String eventName = JOptionPane.showInputDialog(null, "Enter event name:");
                     String eventEnd = JOptionPane.showInputDialog(null, "Enter event end time:");
                     int endTime = convertEndTimeToIndex(eventEnd);
-                    System.out.println(endTime);
                     if (eventName != null && !eventName.trim().isEmpty()) {
                         eventListener.addEvent(day, startTime, endTime, eventName);
                         updateCalendarDisplay();
@@ -102,11 +101,13 @@ public class SchedulePanel extends JPanel {
 					button.setText(event);
                     gbc.gridx = day + 1;
                     gbc.gridy = slot + 1;
-                    gbc.gridheight = 2;  //Change according to meeting length - Kenneth (Make a for loop later for this shit)
+                    gbc.gridheight = 1;  //Change according to meeting length - Kenneth (Make a for loop later for this shit)
                     gbl.setConstraints(button,gbc);
-                    buttons[day][slot+1].setVisible(false);
+                    //buttons[day][slot].setVisible(false);
+                    System.out.println("Color should be yellow");
 					button.setBackground(Color.YELLOW); // Set background color for events
 				} else {
+                    System.out.println("Color should be white");
 					button.setText(""); // Clear text if no event
 					button.setBackground(Color.WHITE); // Set default background color
 				}
