@@ -23,6 +23,13 @@ public class Schedule {
         this.Attendees = new Vector<Integer>();
     }
 
+    public Schedule(Integer Owner, String Title, LocalDateTime Start, LocalDateTime End) {
+        this.Owner = Owner;
+        this.Title = Title;
+        this.Start = Start;
+        this.End = End;
+        this.Attendees = new Vector<Integer>();
+    }
     public void AddAddendee(Integer userId) {
         Attendees.add(userId);
     }

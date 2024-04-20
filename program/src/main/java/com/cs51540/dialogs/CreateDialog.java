@@ -5,18 +5,30 @@
 
 package com.cs51540.dialogs;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.*;
-import java.util.*;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import com.cs51540.models.Schedule;
 
-public class CreateDialog extends JFrame {
+public class CreateDialog extends JFrame implements ActionListener{
+    private Schedule schedule;
+
     public CreateDialog()
     {
         super();
@@ -165,21 +177,50 @@ public class CreateDialog extends JFrame {
             int endHour = (Integer) endHourChoice.getValue();
             int endMinute = (Integer) endMinuteChoice.getValue();
             String endDay = endDayChoice.getSelectedItem().toString();
-            
-            int Id = 0;
-            
+                       
             int Owner = 0;
             
             String Title = eventNameInput.getText();
             
-            LocalDateTime Start = LocalDateTime.now();
+            LocalDate sunday = getSunday();
+            LocalDateTime Start = sunday.plusDays(getDayOffset(startDay)).atTime(startHour, startMinute);
+            LocalDateTime End = sunday.plusDays(getDayOffset(endDay)).atTime(endHour, endMinute);
             
-            LocalDateTime End = LocalDateTime.now();
+            schedule = new Schedule(Owner,Title,Start,End);       
             
-            Schedule schedule = new Schedule(Id,Owner,Title,Start,End);
-            
-            
-            JOptionPane.showMessageDialog(createButton, "Event Created!");
+            // call Action Handler
+            actionPerformed(null);
         });
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public LocalDate getSunday()  
+    {
+        LocalDate today = LocalDate.now();
+        DayOfWeek dayOfWeek = today.getDayOfWeek();
+        LocalDate sunday = null;
+        switch(dayOfWeek) {
+        case SUNDAY -> sunday = today;
+        case MONDAY -> sunday = today.minusDays(1);
+        case TUESDAY -> sunday = today.minusDays(2);
+        case WEDNESDAY -> sunday = today.minusDays(3);
+        case THURSDAY -> sunday = today.minusDays(4);
+        case FRIDAY -> sunday = today.minusDays(5);
+        case SATURDAY -> sunday = today.minusDays(6);
+        }
+        return sunday;
+    }
+
+    public int getDayOffset(String day) {
+        int result = 0;
+        return result;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+
     }
 }

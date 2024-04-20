@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.xml.crypto.Data;
 
+import com.cs51540.dialogs.CreateDialog;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.User;
@@ -97,6 +98,7 @@ public class SchedulePanel extends JPanel {
                     dialog.addActionListener((ActionEvent e) -> {
                         Schedule schedule = dialog.getSchedule();
                         DataRepository.AddSchedule(schedule);
+                        dialog.dispose();
                     });
                     updateCalendarDisplay();
                 });
