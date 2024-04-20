@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class Scheduler extends JFrame{
     public Scheduler(){
-		setTitle("Scheduler");
+		setTitle("PNW Scheduler");
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

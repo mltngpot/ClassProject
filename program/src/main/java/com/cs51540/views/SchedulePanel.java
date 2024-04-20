@@ -27,7 +27,7 @@ public class SchedulePanel extends JPanel {
         gbc.weighty = 0.2;
         gbc.anchor = GridBagConstraints.LINE_START;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(2, 2, 2, 2);
+        gbc.insets = new Insets(1, 1, 1, 1);
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
 
@@ -42,6 +42,7 @@ public class SchedulePanel extends JPanel {
                 cal.add(Calendar.MINUTE, interval);
                 gbc.gridy = x;
                 JLabel timeLabel = new JLabel(df.format(cal.getTime()));
+                timeLabel.setFont(new Font("Dialog",Font.BOLD,12));
                 add(timeLabel, gbc);
             }
         } catch (Exception e) {
@@ -52,6 +53,7 @@ public class SchedulePanel extends JPanel {
         for (int x = 0; x < daysOfWeek.length; x++) {
             JLabel dayLabel = new JLabel(daysOfWeek[x]);
             dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            dayLabel.setFont(new Font("Dialog",Font.BOLD,18));
             gbc.gridx = x + 1;
             gbc.gridy = 0;
             add(dayLabel, gbc);
@@ -95,7 +97,7 @@ public class SchedulePanel extends JPanel {
 					button.setText(event);
                     gbc.gridx = day + 1;
                     gbc.gridy = slot + 1;
-                    gbc.gridheight = 1;  //Change according to meeting length - Kenneth
+                    gbc.gridheight = 2;  //Change according to meeting length - Kenneth (Make a for loop later for this shit)
                     gbl.setConstraints(button,gbc);
                     buttons[day][slot+1].setVisible(false);
 					button.setBackground(Color.YELLOW); // Set background color for events
