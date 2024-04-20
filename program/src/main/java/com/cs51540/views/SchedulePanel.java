@@ -68,7 +68,7 @@ public class SchedulePanel extends JPanel {
                 add(button, gbc);
                 buttons[x - 1][y - 1] = button;
                 int day = x - 1;  // Day calculation
-                int startTime = (y - 1) / 2 + 8;  // Start time calculation
+                int startTime = y - 1;  // Start time calculation
                 int endTime = startTime + 1;  // End time calculation
                 button.addActionListener(e -> {
                     String eventName = JOptionPane.showInputDialog(null, "Enter event name:");
@@ -84,25 +84,23 @@ public class SchedulePanel extends JPanel {
     }
 
     private void updateCalendarDisplay() {
-        System.out.println("Updating calendar display...");
-
-        for (int day = 0; day < 7; day++) {
-            for (int slot = 0; slot < 48; slot++) {
-                String event = eventListener.getEvent(day, slot);
-                int row = slot / 2; // Each slot takes 2 rows
-                int col = day;
-                JButton button = buttons[col][row];
-                System.out.println("Day: " + day + ", Slot: " + slot + ", Event: " + event); // Debugging output
-                if (event != null && !event.isEmpty()) {
-                    button.setText(event);
-                    button.setBackground(Color.YELLOW); // Set background color for events
-                } else {
-                    button.setText(""); // Clear text if no event
-                    button.setBackground(Color.WHITE); // Set default background color
-                }
-            }
-        }
-
-        System.out.println("Calendar display updated.");
-    }
+		System.out.println("Updating calendar display...");
+	
+		for (int day = 0; day < 7; day++) {
+			for (int slot = 0; slot < 25; slot++) { // Adjusted to iterate over 24 slots only
+				String event = eventListener.getEvent(day, slot);
+				JButton button = buttons[day][slot]; // Adjusted to directly access the button
+				System.out.println("Day: " + day + ", Slot: " + slot + ", Event: " + event); // Debugging output
+				if (event != null && !event.isEmpty()) {
+					button.setText(event);
+					button.setBackground(Color.YELLOW); // Set background color for events
+				} else {
+					button.setText(""); // Clear text if no event
+					button.setBackground(Color.WHITE); // Set default background color
+				}
+			}
+		}
+	
+		System.out.println("Calendar display updated.");
+	}
 }
