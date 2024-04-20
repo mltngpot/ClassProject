@@ -2,10 +2,13 @@ package com.cs51540.views;
 import java.awt.*;
 import javax.swing.*;
 
+import com.cs51540.interfaces.IDataRepository;
+
 public class MainPanel extends JPanel{
-	public MainPanel(){
+	public MainPanel(IDataRepository DataRepository){
 		BorderLayout layout = new BorderLayout();
 		setLayout(layout);
-		add(new SchedulePanel(), BorderLayout.CENTER);
+		add(new SchedulePanel(DataRepository), BorderLayout.CENTER);
+
 	}
 }
