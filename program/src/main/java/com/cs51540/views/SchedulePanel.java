@@ -11,6 +11,7 @@ import com.cs51540.models.User;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -70,9 +71,12 @@ public class SchedulePanel extends JPanel {
             gbc.gridy = 0;
             add(dayLabel, gbc);
         }
+        InitializeButtons();
+        setBackground(Color.LIGHT_GRAY);
+    }
 
-        
-
+    private void InitializeButtons() {
+        Border blackline = BorderFactory.createLineBorder(Color.black);
         for (int x = 1; x <= 7; x++) {
             for (int y = 1; y <= 25; y++) {
                 gbc.gridx = x;
@@ -83,11 +87,13 @@ public class SchedulePanel extends JPanel {
                 button.setOpaque(true);
                 add(button, gbc);
                 buttons[x - 1][y - 1] = button;
-                int day = x - 1;  // Day calculation
+                // Day calculation
                 int startTime = y - 1;  // Start time calculation
                 button.addActionListener(e -> {
+                    // add edit functionality
+                    // check to see this has a schedule in it
                     CreateDialog dialog = new CreateDialog();
-                    dialogue.setVisible(true);
+                    dialog.setVisible(true);
                     dialog.addActionListener((ActionEvent e) -> {
                         Schedule schedule = dialog.getSchedule();
                         DataRepository.AddSchedule(schedule);
@@ -96,18 +102,60 @@ public class SchedulePanel extends JPanel {
                 });
             }
         }
-
-        setBackground(Color.LIGHT_GRAY);
     }
 
     private void updateCalendarDisplay() {
+        InitializeButtons();
+
         Schedule[] schedules = DataRepository.GetWeekSchedule(LocalDate.now());
         for(Schedule schedule : schedules){
-            schedule.Start
-
+            try {
+            int dayIndex = getDayIndex(schedule.Start);
+            int slotIndex = getSlotIndex(schedule.Start);
+            int endIndex = getSlotIndex(schedule.End);
+            User owner = DataRepository.GetUser(schedule.Owner);
+            JButton button = buttons[dayIndex][slotIndex];
+            button.setBackground(owner.DisplayColor);
+            button.setText(schedule.Title);
+            // finish adding schedule information
+            // Button row thing
+            }
+            catch (Exception e)
+            {
+                System.err.println("Schedule Id: " + schedule.Id + "Handling Error");
+                System.err.println(e.getMessage());
+            }
         }      
 
 	}
+
+    private int getDayIndex(LocalDateTime date)
+    {
+        int result = 0;
+        switch(date.getDayOfWeek()) {
+            case SUNDAY -> result = 0;
+            case MONDAY -> result = 1;
+            case TUESDAY -> result = 2;
+            case WEDNESDAY -> result = 3;
+            case THURSDAY -> result = 4;
+            case FRIDAY -> result = 5;
+            case SATURDAY -> result = 6;
+        }
+        return result;
+    }
+
+    private int getSlotIndex(LocalDateTime time) throws Exception {
+        int result;
+        int hour = time.getHour() - 8;
+        int minute = time.getMinute();
+        if (hour < 0 && hour > 12)
+            throw new Exception("Time out of range");
+        result = hour * 2;
+        if (minute >= 30)
+            result++;
+            
+        return result;
+    }
 
     public static int convertEndTimeToIndex(String endTime) {
         try {
