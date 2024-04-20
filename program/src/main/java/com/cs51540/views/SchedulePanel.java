@@ -59,6 +59,8 @@ public class SchedulePanel extends JPanel {
             add(dayLabel, gbc);
         }
 
+        
+
         for (int x = 1; x <= 7; x++) {
             for (int y = 1; y <= 25; y++) {
                 gbc.gridx = x;
@@ -71,9 +73,12 @@ public class SchedulePanel extends JPanel {
                 buttons[x - 1][y - 1] = button;
                 int day = x - 1;  // Day calculation
                 int startTime = y - 1;  // Start time calculation
-                int endTime = startTime + 1;  // End time calculation
+                //int endTime = startTime + 1;  // End time calculation
                 button.addActionListener(e -> {
                     String eventName = JOptionPane.showInputDialog(null, "Enter event name:");
+                    String eventEnd = JOptionPane.showInputDialog(null, "Enter event end time:");
+                    int endTime = convertEndTimeToIndex(eventEnd);
+                    System.out.println(endTime);
                     if (eventName != null && !eventName.trim().isEmpty()) {
                         eventListener.addEvent(day, startTime, endTime, eventName);
                         updateCalendarDisplay();
@@ -110,4 +115,32 @@ public class SchedulePanel extends JPanel {
 	
 		System.out.println("Calendar display updated.");
 	}
+
+    public static int convertEndTimeToIndex(String endTime) {
+        try {
+            if(endTime.length()<3){
+                endTime = endTime + ":00";
+            }
+            // Split the end time string by colon to get hour and minute parts
+            String[] timeParts = endTime.split(":");
+            if (timeParts.length != 2) {
+                throw new IllegalArgumentException("Invalid time format");
+            }
+            int endHour = Integer.parseInt(timeParts[0]);
+            int endMinute = Integer.parseInt(timeParts[1]);
+
+            // Calculate total minutes from 8:00 am to end time
+            int totalMinutes = (endHour - 8) * 60 + endMinute;
+
+            // Calculate array index (each position represents 30 minutes)
+            int arrayIndex = totalMinutes / 30;
+            if (arrayIndex < 0 || arrayIndex >= 25) {
+                throw new IllegalArgumentException("Invalid time range");
+            }
+            return arrayIndex;
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error converting end time to index: " + e.getMessage());
+            return -1; // Return -1 for invalid input or errors
+        }
+    }
 }
