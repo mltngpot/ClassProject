@@ -6,9 +6,11 @@ import javax.swing.border.*;
 import javax.xml.crypto.Data;
 
 import com.cs51540.interfaces.IDataRepository;
+import com.cs51540.models.Schedule;
 import com.cs51540.models.User;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -84,13 +86,13 @@ public class SchedulePanel extends JPanel {
                 int day = x - 1;  // Day calculation
                 int startTime = y - 1;  // Start time calculation
                 button.addActionListener(e -> {
-                    String eventName = JOptionPane.showInputDialog(null, "Enter event name:");
-                    String eventEnd = JOptionPane.showInputDialog(null, "Enter event end time:");
-                    int endTime = convertEndTimeToIndex(eventEnd);
-                    if (eventName != null && !eventName.trim().isEmpty()) {
-                        eventListener.addEvent(day, startTime, endTime, eventName);
-                        updateCalendarDisplay();
-                    }
+                    CreateDialog dialog = new CreateDialog();
+                    dialogue.setVisible(true);
+                    dialog.addActionListener((ActionEvent e) -> {
+                        Schedule schedule = dialog.getSchedule();
+                        DataRepository.AddSchedule(schedule);
+                    });
+                    updateCalendarDisplay();
                 });
             }
         }
@@ -99,28 +101,12 @@ public class SchedulePanel extends JPanel {
     }
 
     private void updateCalendarDisplay() {
-		System.out.println("Updating calendar display...");
-	
-		for (int day = 0; day < 7; day++) {
-			for (int slot = 0; slot < 25; slot++) { // Adjusted to iterate over 24 slots only
-				String event = eventListener.getEvent(day, slot);
-				JButton button = buttons[day][slot]; // Adjusted to directly access the button
-				System.out.println("Day: " + day + ", Slot: " + slot + ", Event: " + event); // Debugging output
-				if (event != null && !event.isEmpty()) {
-					button.setText(event);
-                    gbc.gridx = day + 1;
-                    gbc.gridy = slot + 1;
-                    gbc.gridheight = 1;  //Change according to meeting length - Kenneth (Make a for loop later for this shit)
-                    gbl.setConstraints(button,gbc);
-					button.setBackground(CurrentUser.DisplayColor); // Set background color for events
-				} else {
-					button.setText(""); // Clear text if no event
-					button.setBackground(Color.WHITE); // Set default background color
-				}
-			}
-		}
-	
-		System.out.println("Calendar display updated.");
+        Schedule[] schedules = DataRepository.GetWeekSchedule(LocalDate.now());
+        for(Schedule schedule : schedules){
+            schedule.Start
+
+        }      
+
 	}
 
     public static int convertEndTimeToIndex(String endTime) {
