@@ -7,18 +7,20 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.cs51540.dialogs.CreateDialog;
+
 public class SchedulePanel extends JPanel {
     private final EventListener eventListener;
     private final JButton[][] buttons = new JButton[7][25];
-
+    GridBagLayout gbl = new GridBagLayout();
+    GridBagConstraints gbc = new GridBagConstraints();
     public SchedulePanel() {
         this.eventListener = new EventListener();
         setupSchedule();
     }
 
     private void setupSchedule() {
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        setLayout(gbl);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 1;
@@ -71,7 +73,9 @@ public class SchedulePanel extends JPanel {
                 int startTime = y - 1;  // Start time calculation
                 int endTime = startTime + 1;  // End time calculation
                 button.addActionListener(e -> {
-                    String eventName = JOptionPane.showInputDialog(null, "Enter event name:");
+                    CreateDialog frame1 = new CreateDialog();
+                    frame1.setVisible(true);
+                    String eventName = "";
                     if (eventName != null && !eventName.trim().isEmpty()) {
                         eventListener.addEvent(day, startTime, endTime, eventName);
                         updateCalendarDisplay();
@@ -93,6 +97,11 @@ public class SchedulePanel extends JPanel {
 				System.out.println("Day: " + day + ", Slot: " + slot + ", Event: " + event); // Debugging output
 				if (event != null && !event.isEmpty()) {
 					button.setText(event);
+                    gbc.gridx = day + 1;
+                    gbc.gridy = slot + 1;
+                    gbc.gridheight = 1;  //Change according to meeting length - Kenneth
+                    gbl.setConstraints(button,gbc);
+                    buttons[day][slot+1].setVisible(false);
 					button.setBackground(Color.YELLOW); // Set background color for events
 				} else {
 					button.setText(""); // Clear text if no event

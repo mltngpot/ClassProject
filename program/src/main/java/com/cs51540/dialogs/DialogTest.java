@@ -34,8 +34,8 @@ public class DialogTest {
  
         // Add action to the button
         createButton.addActionListener((ActionEvent e) -> {
-            CreateDialog frame1 = new CreateDialog();
-            frame1.setVisible(true);
+           // CreateDialog frame1 = new CreateDialog();
+            //frame1.setVisible(true);
         });
         
         // Add action to the button
