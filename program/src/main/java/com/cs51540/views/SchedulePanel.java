@@ -103,11 +103,8 @@ public class SchedulePanel extends JPanel {
                     gbc.gridy = slot + 1;
                     gbc.gridheight = 1;  //Change according to meeting length - Kenneth (Make a for loop later for this shit)
                     gbl.setConstraints(button,gbc);
-                    //buttons[day][slot].setVisible(false);
-                    System.out.println("Color should be yellow");
 					button.setBackground(Color.YELLOW); // Set background color for events
 				} else {
-                    System.out.println("Color should be white");
 					button.setText(""); // Clear text if no event
 					button.setBackground(Color.WHITE); // Set default background color
 				}
