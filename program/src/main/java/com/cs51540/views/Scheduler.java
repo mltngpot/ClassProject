@@ -13,8 +13,8 @@ public class Scheduler extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(2560,1600));
 		add(new MainPanel(DataRepository), BorderLayout.CENTER);
-	    add(new Header(), BorderLayout.NORTH);
-		add(new Footer(), BorderLayout.SOUTH);
+	    add(new Header(DataRepository), BorderLayout.NORTH);
+		add(new Footer(DataRepository), BorderLayout.SOUTH);
 		pack();
     }
 }
