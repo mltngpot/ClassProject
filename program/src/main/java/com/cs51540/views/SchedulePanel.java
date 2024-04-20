@@ -10,15 +10,15 @@ import java.util.Date;
 public class SchedulePanel extends JPanel {
     private final EventListener eventListener;
     private final JButton[][] buttons = new JButton[7][25];
-
+    GridBagLayout gbl = new GridBagLayout();
+    GridBagConstraints gbc = new GridBagConstraints();
     public SchedulePanel() {
         this.eventListener = new EventListener();
         setupSchedule();
     }
 
     private void setupSchedule() {
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        setLayout(gbl);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 1;
@@ -93,6 +93,11 @@ public class SchedulePanel extends JPanel {
 				System.out.println("Day: " + day + ", Slot: " + slot + ", Event: " + event); // Debugging output
 				if (event != null && !event.isEmpty()) {
 					button.setText(event);
+                    gbc.gridx = day + 1;
+                    gbc.gridy = slot + 1;
+                    gbc.gridheight = 1;  //Change according to meeting length - Kenneth
+                    gbl.setConstraints(button,gbc);
+                    buttons[day][slot+1].setVisible(false);
 					button.setBackground(Color.YELLOW); // Set background color for events
 				} else {
 					button.setText(""); // Clear text if no event
