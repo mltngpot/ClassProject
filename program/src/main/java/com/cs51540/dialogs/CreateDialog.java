@@ -9,6 +9,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.*;
+import java.util.*;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+
+import com.cs51540.models.Schedule;
 
 public class CreateDialog extends JFrame {
     public CreateDialog()
@@ -38,7 +44,7 @@ public class CreateDialog extends JFrame {
         
         // Choice of if event is online or in person
         JLabel onlineChoiceLabel = new JLabel("Online or In person: ");
-        JComboBox onlineChoiceInput = new JComboBox(onlineChoices);
+        JComboBox<String> onlineChoiceInput = new JComboBox<>(onlineChoices);
         onlineChoiceInput.setSelectedIndex(1);
         
         // Location of Event
@@ -47,7 +53,7 @@ public class CreateDialog extends JFrame {
         
         // Start Day
         JLabel startDayLabel = new JLabel("Start Day: ");
-        JComboBox startDayChoice = new JComboBox(days);
+        JComboBox<String> startDayChoice = new JComboBox<>(days);
         startDayChoice.setSelectedIndex(6);
         
         // Start Hour
@@ -61,7 +67,7 @@ public class CreateDialog extends JFrame {
         
         // Start Minute
         JLabel startMinuteLabel = new JLabel("Start Minute: ");
-        JSpinner startMinuteChoice = new JSpinner(new SpinnerNumberModel(0, 0, 60, 1));
+        JSpinner startMinuteChoice = new JSpinner(new SpinnerNumberModel(0, 0, 30, 30));
         startMinuteChoice.setBounds(70, 130, 50, 40);
         //Added this so we don't have to do data validation on time
         //Remove line if we want users to be able to type the number
@@ -84,7 +90,7 @@ public class CreateDialog extends JFrame {
         
         // End Minute
         JLabel endMinuteLabel = new JLabel("End Minute: ");
-        JSpinner endMinuteChoice = new JSpinner(new SpinnerNumberModel(0, 0, 60, 1));
+        JSpinner endMinuteChoice = new JSpinner(new SpinnerNumberModel(0, 0, 30, 30));
         endMinuteChoice.setBounds(70, 130, 50, 40);
         //Added this so we don't have to do data validation on time
         //Remove line if we want users to be able to type the number
@@ -147,16 +153,33 @@ public class CreateDialog extends JFrame {
         getContentPane().add(BorderLayout.SOUTH, createButton);
         
         add(mainPanel);
-        
-        
+
         // Add action to the button
-        createButton.addActionListener(new ActionListener() 
-        {
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                JOptionPane.showMessageDialog(createButton, "Event Created!");
-            }
+        createButton.addActionListener((ActionEvent e) -> {
+            
+            int startHour = (Integer) startHourChoice.getValue();
+            int startMinute = (Integer) startMinuteChoice.getValue();
+            String startDay = startDayChoice.getSelectedItem().toString();
+            
+            
+            int endHour = (Integer) endHourChoice.getValue();
+            int endMinute = (Integer) endMinuteChoice.getValue();
+            String endDay = endDayChoice.getSelectedItem().toString();
+            
+            int Id = 0;
+            
+            int Owner = 0;
+            
+            String Title = eventNameInput.getText();
+            
+            LocalDateTime Start = LocalDateTime.now();
+            
+            LocalDateTime End = LocalDateTime.now();
+            
+            Schedule schedule = new Schedule(Id,Owner,Title,Start,End);
+            
+            
+            JOptionPane.showMessageDialog(createButton, "Event Created!");
         });
     }
 }
