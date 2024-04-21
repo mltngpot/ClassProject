@@ -43,9 +43,9 @@ public class TestDataRepository implements IDataRepository {
     }
 
     private ArrayList<Schedule> getMeals(LocalDate day) {
-        Schedule breakfast = new Schedule(0, 0, "Breakfast", day.atTime(7, 00), day.atTime(7, 30) );
+        Schedule breakfast = new Schedule(0, 0, "Breakfast", day.atTime(8, 00), day.atTime(8, 30) );
         Schedule secondBreakfast = new Schedule(0, 0, "Second Breakfast", day.atTime(9, 00), day.atTime(9, 30) );
-        Schedule elevensies = new Schedule(0, 0, "Elevenses", day.atTime(11, 00), day.atTime(11, 45) );
+        Schedule elevensies = new Schedule(0, 0, "Elevenses", day.atTime(11, 00), day.atTime(12, 45) );
         Schedule luncheon = new Schedule(0, 0, "Luncheon", day.atTime(13, 00), day.atTime(13, 30) );
         Schedule afternoonTea = new Schedule(0, 0, "Afternoon Tea", day.atTime(15, 00), day.atTime(15, 30) );
         Schedule dinner = new Schedule(0, 0, "Dinner", day.atTime(18, 00), day.atTime(19, 00) );
@@ -118,8 +118,7 @@ public class TestDataRepository implements IDataRepository {
     public Schedule[] GetWeekSchedule(LocalDate weekOfDate) {
         ArrayList<Schedule> weekSchedule = GenerateSchedules(weekOfDate);
         Schedule[] tempArray = new Schedule[weekSchedule.size()];
-        weekSchedule.toArray(tempArray);
-        return tempArray;
+        return Schedules.toArray(tempArray);
     }
 
     @Override
