@@ -8,6 +8,7 @@ import javax.xml.crypto.Data;
 import com.cs51540.dialogs.CreateDialog;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
+import com.cs51540.models.Slot;
 import com.cs51540.models.User;
 
 import java.text.SimpleDateFormat;
@@ -18,7 +19,7 @@ import java.util.Date;
 
 public class SchedulePanel extends JPanel {
     private final EventListener eventListener;
-    private final JButton[][] buttons = new JButton[7][25];
+    private final Slot[][] slots = new Slot[7][25];
     GridBagLayout gbl = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
     private User CurrentUser;
@@ -82,15 +83,16 @@ public class SchedulePanel extends JPanel {
             for (int y = 1; y <= 25; y++) {
                 gbc.gridx = x;
                 gbc.gridy = y;
-                JButton button = new JButton();
-                button.setBorder(blackline);
-                button.setBackground(Color.WHITE);
-                button.setOpaque(true);
-                add(button, gbc);
-                buttons[x - 1][y - 1] = button;
+                Slot slot = new Slot();
+                slot.setBorder(blackline);
+                slot.setBackground(Color.WHITE);
+                slot.setOpaque(true);
+                add(slot, gbc);
+                slots[x - 1][y - 1] = slot;
                 // Day calculation
                 int startTime = y - 1;  // Start time calculation
-                button.addActionListener(e -> {
+                
+                slot.addActionListener(e -> {
                     // add edit functionality
                     // check to see this has a schedule in it
                     CreateDialog dialog = new CreateDialog();
@@ -116,9 +118,9 @@ public class SchedulePanel extends JPanel {
             int slotIndex = getSlotIndex(schedule.Start);
             int endIndex = getSlotIndex(schedule.End);
             User owner = DataRepository.GetUser(schedule.Owner);
-            JButton button = buttons[dayIndex][slotIndex];
-            button.setBackground(owner.DisplayColor);
-            button.setText(schedule.Title);
+            Slot slot = slots[dayIndex][slotIndex];
+            slot.setBackground(owner.DisplayColor);
+            slot.setText(schedule.Title);
             // finish adding schedule information
             // Button row thing
             }
