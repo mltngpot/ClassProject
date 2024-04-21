@@ -24,6 +24,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import com.cs51540.dialogs.CreateDialog;
+import com.cs51540.dialogs.EditDialog;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.Slot;
@@ -119,7 +120,7 @@ public class SchedulePanel extends JPanel {
 
 
     private void showCreateDialog(){
-        CreateDialog dialog = new CreateDialog();
+        CreateDialog dialog = new CreateDialog(DataRepository);
         dialog.setVisible(true);
         dialog.addComponentListener(new ComponentAdapter() {
             @Override
@@ -130,8 +131,8 @@ public class SchedulePanel extends JPanel {
     }
 
     private void showEditDialog(int scheduleId) {                
-        // EditDialog dialog = new EditDialog(DataRepository);
-        // dialog.setVisible(true);
+        EditDialog dialog = new EditDialog(DataRepository);
+        dialog.setVisible(true);
         // dialog.addComponentListener(new ComponentAdapter() {
         //     @Override
         //     public void componentHidden(ComponentEvent arg0) {

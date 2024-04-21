@@ -239,7 +239,7 @@ public class CreateDialog extends JFrame{
             //create object
             //Correct one
             //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
-            schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
+            //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
             //System.out.println(getSchedule());
             
             //TODO

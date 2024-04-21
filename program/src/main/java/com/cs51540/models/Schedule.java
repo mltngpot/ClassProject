@@ -10,7 +10,7 @@ public class Schedule {
     public Integer Owner;
     public String MeetingType;
     public String Location;
-    public List<Integer> Attendees;
+    public ArrayList<Integer> Attendees;
     public String Title;
     public LocalDateTime Start;
     public LocalDateTime End;
@@ -27,7 +27,7 @@ public class Schedule {
         this.Title = Title;
         this.Start = Start;
         this.End = End;
-        this.Attendees = new Vector<Integer>();
+        this.Attendees = new ArrayList<>();
         System.out.println(Id + Owner + MeetingType + Location + Title + Start + End + Attendees);
     }
 

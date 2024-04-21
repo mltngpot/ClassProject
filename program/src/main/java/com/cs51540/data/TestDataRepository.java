@@ -37,19 +37,21 @@ public class TestDataRepository implements IDataRepository {
             case FRIDAY -> sunday = weekOfDate.minusDays(5);
             case SATURDAY -> sunday = weekOfDate.minusDays(6);
         }
-       // schedules.addAll(getMeals(sunday));
+        schedules.addAll(getMeals(sunday));
 
         return schedules;
     }
 
     private ArrayList<Schedule> getMeals(LocalDate day) {
-        Schedule breakfast = new Schedule(0, 0,"Online", "My room", "Breakfast", day.atTime(7, 00), day.atTime(7, 30) );
-      /*  Schedule secondBreakfast = new Schedule(0, 0, "Second Breakfast", day.atTime(9, 00), day.atTime(9, 30) );
+        //Correct
+        //Schedule breakfast = new Schedule(0, 0,"Online", "My room", "Breakfast", day.atTime(7, 00), day.atTime(7, 30) );
+        Schedule breakfast = new Schedule(0, 0,"Breakfast", day.atTime(7, 00), day.atTime(7, 30) );
+        Schedule secondBreakfast = new Schedule(0, 0, "Second Breakfast", day.atTime(9, 00), day.atTime(9, 30) );
         Schedule elevensies = new Schedule(0, 0, "Elevenses", day.atTime(11, 00), day.atTime(11, 45) );
         Schedule luncheon = new Schedule(0, 0, "Luncheon", day.atTime(13, 00), day.atTime(13, 30) );
         Schedule afternoonTea = new Schedule(0, 0, "Afternoon Tea", day.atTime(15, 00), day.atTime(15, 30) );
         Schedule dinner = new Schedule(0, 0, "Dinner", day.atTime(18, 00), day.atTime(19, 00) );
-        Schedule supper = new Schedule(0, 0, "Supper", day.atTime(21, 00), day.atTime(22, 00) );*/
+        Schedule supper = new Schedule(0, 0, "Supper", day.atTime(21, 00), day.atTime(22, 00) );
 
         breakfast.AddAddendee(1);
         breakfast.AddAddendee(2);
@@ -57,13 +59,13 @@ public class TestDataRepository implements IDataRepository {
         
         ArrayList<Schedule> meals = new ArrayList<>();
         meals.add(breakfast);
-       /* meals.add(secondBreakfast);
+        meals.add(secondBreakfast);
         meals.add(elevensies);
         meals.add(luncheon);
         meals.add(luncheon);
         meals.add(afternoonTea);
         meals.add(dinner);
-        meals.add(supper);*/
+        meals.add(supper);
         return meals;
     }
     
@@ -95,12 +97,7 @@ public class TestDataRepository implements IDataRepository {
         System.out.println("I triggered");
         return Schedules.get(scheduleId);
     }
-    
-    @Override
-    public Schedule GetScheduleByID(Integer scheduleId)
-    {
-        return Schedules.get(scheduleId);
-    }
+
  
     @Override
     public Schedule[] GetUserSchedule(Integer userId) {
