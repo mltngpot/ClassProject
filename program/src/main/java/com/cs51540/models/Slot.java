@@ -1,9 +1,9 @@
 package com.cs51540.models;
-import javax.swing.*;
+import javax.swing.JButton;
 
 public class Slot extends JButton{
     private Schedule schedule;
-    private Integer id = this.schedule.Id;
+    private Integer id = -1;
 
     public Integer getId() {
         return id;
