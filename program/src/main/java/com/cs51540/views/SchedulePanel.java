@@ -42,10 +42,10 @@ public class SchedulePanel extends JPanel {
         this.eventListener = new EventListener();
         this.DataRepository = DataRepository;
         CurrentUser = DataRepository.GetUser(0); //TODO Hard coded to 0, need to be able to change
-        setupSchedule();
+        setupSchedule(DataRepository);
     }
 
-    private void setupSchedule() {
+    private void setupSchedule(IDataRepository DataRepository) {
         setLayout(gbl);
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -90,7 +90,7 @@ public class SchedulePanel extends JPanel {
         setBackground(Color.LIGHT_GRAY);
     }
 
-    private void InitializeButtons() {
+    private void InitializeButtons(IDataRepository DataRepository) {
         Border blackline = BorderFactory.createLineBorder(Color.black);
         gbc.gridheight = 1;
         for (int x = 1; x <= 7; x++) {
@@ -121,7 +121,7 @@ public class SchedulePanel extends JPanel {
 
 
     private void showCreateDialog(){
-        CreateDialog dialog = new CreateDialog();
+        CreateDialog dialog = new CreateDialog(DataRepository);
         dialog.setVisible(true);
         dialog.addComponentListener(new ComponentAdapter() {
             @Override
@@ -140,6 +140,7 @@ public class SchedulePanel extends JPanel {
                 doUpdateSchedule(dialog);
             }
         });
+
     }
 
     private void doAddSchedule(CreateDialog dialog) {
