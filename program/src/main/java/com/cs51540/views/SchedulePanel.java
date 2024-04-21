@@ -6,6 +6,8 @@ import javax.swing.border.*;
 import javax.xml.crypto.Data;
 
 import com.cs51540.dialogs.CreateDialog;
+import com.cs51540.dialogs.EditDialog;
+import com.cs51540.dialogs.DeleteDialog;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.User;
@@ -28,10 +30,10 @@ public class SchedulePanel extends JPanel {
         this.eventListener = new EventListener();
         this.DataRepository = DataRepository;
         CurrentUser = DataRepository.GetUser(0); //TODO Hard coded to 0, need to be able to change
-        setupSchedule();
+        setupSchedule(DataRepository);
     }
 
-    private void setupSchedule() {
+    private void setupSchedule(IDataRepository DataRepository) {
         setLayout(gbl);
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -72,11 +74,11 @@ public class SchedulePanel extends JPanel {
             gbc.gridy = 0;
             add(dayLabel, gbc);
         }
-        InitializeButtons();
+        InitializeButtons(DataRepository);
         setBackground(Color.LIGHT_GRAY);
     }
 
-    private void InitializeButtons() {
+    private void InitializeButtons(IDataRepository DataRepository) {
         Border blackline = BorderFactory.createLineBorder(Color.black);
         for (int x = 1; x <= 7; x++) {
             for (int y = 1; y <= 25; y++) {
@@ -93,21 +95,23 @@ public class SchedulePanel extends JPanel {
                 button.addActionListener(e -> {
                     // add edit functionality
                     // check to see this has a schedule in it
-                    CreateDialog dialog = new CreateDialog();
-                    dialog.setVisible(true);
-                    dialog.addActionListener((ActionEvent e) -> {
-                        Schedule schedule = dialog.getSchedule();
-                        DataRepository.AddSchedule(schedule);
-                        dialog.dispose();
-                    });
-                    updateCalendarDisplay();
+                      CreateDialog dialog = new CreateDialog(DataRepository);
+                      dialog.setVisible(true);
+                     //EditDialog dialog = new EditDialog(DataRepository);
+                     //dialog.setVisible(true);
+                    //dialog.addActionListener((ActionEvent e) -> {
+                       // Schedule schedule = dialog.getSchedule();
+                      //  DataRepository.AddSchedule(schedule);
+                      //  dialog.dispose();
+                   // });
+                  //  updateCalendarDisplay();
                 });
             }
         }
     }
 
     private void updateCalendarDisplay() {
-        InitializeButtons();
+        //InitializeButtons();
 
         Schedule[] schedules = DataRepository.GetWeekSchedule(LocalDate.now());
         for(Schedule schedule : schedules){
