@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 
 public class Schedule {
+    public static Integer maxId = 0;
     public Integer Id;
     public Integer Owner;
     public ArrayList<Integer> Attendees;
@@ -14,6 +15,9 @@ public class Schedule {
     public String Description;
     
     public Schedule(Integer Id, Integer Owner, String Title, LocalDateTime Start, LocalDateTime End) {
+        if(Id > maxId) {
+            maxId = Id + 1;
+        }
         this.Id = Id;
         this.Owner = Owner;
         this.Title = Title;
@@ -23,6 +27,7 @@ public class Schedule {
     }
 
     public Schedule(Integer Owner, String Title, LocalDateTime Start, LocalDateTime End) {
+        this.Id = maxId++;
         this.Owner = Owner;
         this.Title = Title;
         this.Start = Start;

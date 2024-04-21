@@ -6,6 +6,10 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -100,17 +104,23 @@ public class SchedulePanel extends JPanel {
                 buttons[x - 1][y - 1] = button;
                 // Day calculation
                 int startTime = y - 1;  // Start time calculation
-                button.addActionListener(e -> {
-                    // add edit functionality
-                    // check to see this has a schedule in it
-                    CreateDialog dialog = new CreateDialog();
-                    dialog.setVisible(true);
-                    // dialog.addActionListener((ActionEvent e) -> {
-                    //     Schedule schedule = dialog.getSchedule();
-                    //     DataRepository.AddSchedule(schedule);
-                    //     dialog.dispose();
-                    // });
-                    updateCalendarDisplay();
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // add edit functionality
+                        // check to see this has a schedule in it
+                        CreateDialog dialog = new CreateDialog();
+                        dialog.setVisible(true);
+                        dialog.addComponentListener(new ComponentAdapter() {
+                            @Override
+                            public void componentHidden(ComponentEvent arg0) {
+                                Schedule schedule = dialog.getSchedule();
+                                DataRepository.AddSchedule(schedule);
+                                dialog.dispose();
+                                updateCalendarDisplay();
+                            }
+                        });
+                    }
                 });
             }
         }
