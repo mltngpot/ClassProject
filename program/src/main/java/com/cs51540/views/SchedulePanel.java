@@ -1,19 +1,6 @@
 package com.cs51540.views;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.xml.crypto.Data;
-
-import com.cs51540.dialogs.CreateDialog;
-import com.cs51540.dialogs.EditDialog;
-import com.cs51540.interfaces.IDataRepository;
-import com.cs51540.models.Schedule;
-import com.cs51540.models.Slot;
-import com.cs51540.models.User;
-
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -31,7 +18,6 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -40,6 +26,7 @@ import javax.swing.border.Border;
 import com.cs51540.dialogs.CreateDialog;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
+import com.cs51540.models.Slot;
 import com.cs51540.models.User;
 
 public class SchedulePanel extends JPanel {
@@ -120,7 +107,7 @@ public class SchedulePanel extends JPanel {
                     @Override
                     public void actionPerformed(ActionEvent e) {  
                         if(slot.getId() > 0){
-                            showEditDialog();
+                            showEditDialog(slot.getId());
                         } else {
                             showCreateDialog();
                         }
@@ -143,14 +130,14 @@ public class SchedulePanel extends JPanel {
     }
 
     private void showEditDialog(int scheduleId) {                
-        EditDialog dialog = new EditDialog(DataRepository);
-        dialog.setVisible(true);
-        dialog.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentHidden(ComponentEvent arg0) {
-                doUpdateSchedule();
-            }
-        });
+        // EditDialog dialog = new EditDialog(DataRepository);
+        // dialog.setVisible(true);
+        // dialog.addComponentListener(new ComponentAdapter() {
+        //     @Override
+        //     public void componentHidden(ComponentEvent arg0) {
+        //         doUpdateSchedule(dialog);
+        //     }
+        // });
     }
 
     private void doAddSchedule(CreateDialog dialog) {
@@ -160,12 +147,12 @@ public class SchedulePanel extends JPanel {
         updateCalendarDisplay();
     }
 
-    private void doUpdateSchedule(EditDialog dialog) {
-        Schedule schedule = dialog.getSchedule();
-        DataRepository.UpdateSchedule(schedule);
-        dialog.dispose();
-        updateCalendarDisplay();
-    }
+    // private void doUpdateSchedule(EditDialog dialog) {
+    //     Schedule schedule = dialog.getSchedule();
+    //     DataRepository.UpdateSchedule(schedule);
+    //     dialog.dispose();
+    //     updateCalendarDisplay();
+    // }
 
     private void updateCalendarDisplay() {
         InitializeButtons();
@@ -180,10 +167,9 @@ public class SchedulePanel extends JPanel {
             Slot slot = slots[dayIndex][slotIndex];
             slot.setBackground(owner.DisplayColor);
             slot.setText(schedule.Title);
+            slot.setId(schedule.Id);
             // Dimension size = slot.getSize();
             // slot.setIcon(getScheduleImageIcon(schedule, size.width, size.height));
-            // finish adding schedule information
-            // Button row thing
             }
             catch (Exception e)
             {
@@ -211,7 +197,7 @@ public class SchedulePanel extends JPanel {
 
     private int getSlotIndex(LocalDateTime time) throws Exception {
         int result;
-        int hour = time.getHour() - 8;
+        int hour = time.getHour() - 7;
         int minute = time.getMinute();
         if (hour < 0 && hour > 12)
             throw new Exception("Time out of range");
