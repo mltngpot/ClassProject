@@ -201,7 +201,7 @@ public class CreateDialog extends JFrame{
         createButton.addActionListener((ActionEvent e) -> {
             //TODO
             //set proper IDs
-            int eventId = 0;
+            int eventId = 1;
             int ownerId = 1;
             //basics
             String Title = eventNameInput.getText();
@@ -238,8 +238,8 @@ public class CreateDialog extends JFrame{
             //TODO
             //create object
             //Correct one
-            //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
-            schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
+            schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
+           // schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
             //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
             //System.out.println(getSchedule());
             

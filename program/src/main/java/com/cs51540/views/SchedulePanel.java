@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.JButton;
 
 import com.cs51540.dialogs.CreateDialog;
 import com.cs51540.dialogs.EditDialog;
@@ -109,8 +110,10 @@ public class SchedulePanel extends JPanel {
                 slot.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {  
+                        System.out.println(slot.getId());
                         if(slot.getId() > 0){
                             showEditDialog(slot.getId());
+                            replaceButtons(slot.getId());
                         } else {
                             showCreateDialog();
                         }
@@ -119,6 +122,45 @@ public class SchedulePanel extends JPanel {
             }
         }
     }
+
+    private void replaceButtons(int slotId){
+        Schedule schedule = DataRepository.GetSchedule(slotId);
+        try {
+        int dayIndex = getDayIndex(schedule.Start);
+        int slotIndex = getSlotIndex(schedule.Start);
+        int endIndex = getSlotIndex(schedule.End);
+        Border blackline = BorderFactory.createLineBorder(Color.black);
+        gbc.gridheight = 1;
+        gbc.gridx = dayIndex + 1;
+        Slot slot = new Slot();
+        slot.setBorder(blackline);
+        slot.setBackground(Color.BLACK);
+        slot.setOpaque(true);
+        for (int start = slotIndex; start < endIndex; start++){
+            this.remove(slots[dayIndex][start]);
+
+        }
+        for (int start = slotIndex; start < endIndex; start++){
+            System.out.println(start);
+            gbc.gridy = start + 1;
+            add(slot,gbc);
+            slots[dayIndex - 1][slotIndex - 1] = slot;
+        }
+        slot.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {  
+                System.out.println(slot.getId());
+                if(slot.getId() > 0){
+                    showEditDialog(slot.getId());
+                } else {
+                    showCreateDialog();
+                }
+            }
+        });
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+}
 
 
     private void showCreateDialog(){
@@ -133,7 +175,7 @@ public class SchedulePanel extends JPanel {
     }
 
     private void showEditDialog(int scheduleId) {                
-        EditDialog dialog = new EditDialog(DataRepository);
+        EditDialog dialog = new EditDialog(DataRepository, scheduleId);
         dialog.setVisible(true);
         dialog.addComponentListener(new ComponentAdapter() {
             @Override

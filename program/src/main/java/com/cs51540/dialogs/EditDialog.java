@@ -21,7 +21,8 @@ import com.cs51540.models.User;
 
 import java.time.DayOfWeek;
 //import java.time.Instant;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -31,7 +32,7 @@ public class EditDialog extends JFrame {
     private IDataRepository DataRepository;
     private final User[] users;
   
-    public EditDialog(IDataRepository DataRepository)
+    public EditDialog(IDataRepository DataRepository, int scheduleId)
     {
         super();
         this.DataRepository = DataRepository;
@@ -49,7 +50,7 @@ public class EditDialog extends JFrame {
         
         // TODO 
         // Remove test ID variable
-        int id = 0;
+        int id = scheduleId;
         // Get schedule
         schedule = DataRepository.GetSchedule(id);
         
@@ -296,6 +297,54 @@ public class EditDialog extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) 
             {
+            //TODO
+            //set proper IDs
+            int eventId = 2;
+            int ownerId = 1;
+            //basics
+            String Title = eventNameInput.getText();
+            String MeetingType = onlineChoiceInput.getSelectedItem().toString();
+            String Location = locationInput.getText();
+            
+            //date stuff
+            int startHour = (Integer) startHourChoice.getValue();
+            int startMinute = (Integer) startMinuteChoice.getValue();
+            String startDay = startDayChoice.getSelectedItem().toString();
+            
+            
+            int endHour = (Integer) endHourChoice.getValue();
+            int endMinute = (Integer) endMinuteChoice.getValue();
+            String endDay = endDayChoice.getSelectedItem().toString();       
+            
+            LocalDate sunday = getSunday();
+            LocalDateTime Start = sunday.plusDays(getDayOffset(startDay)).atTime(startHour, startMinute);
+            LocalDateTime End = sunday.plusDays(getDayOffset(endDay)).atTime(endHour, endMinute);
+            
+            //Attendee
+            int[] userIndex = attendeeChoice.getSelectedIndices();
+            ArrayList<String> selected = new ArrayList<>();
+            ArrayList<Integer> userIDSelected = new ArrayList<>();
+            for(int i = 0; i < userIndex.length; i++)
+            {
+                selected.add(attendeeChoice.getModel().getElementAt(userIndex[i]));
+            }
+            for (String x : selected)
+            {
+                userIDSelected.add(dict.get(x));
+            }
+            
+            //TODO
+            //create object
+            //Correct one
+            schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
+           // schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
+            //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
+            //System.out.println(getSchedule());
+            
+            //TODO
+            //Action Handler to create event properly
+            // call Action Handler
+            //actionPerformed(null);
                 JOptionPane.showMessageDialog(saveButton, "Changes Saved");
             }
         });
@@ -313,4 +362,51 @@ public class EditDialog extends JFrame {
     public Schedule getSchedule() {
         return schedule;
     }
+
+public LocalDate getSunday()  
+{
+    LocalDate today = LocalDate.now();
+    DayOfWeek dayOfWeek = today.getDayOfWeek();
+    LocalDate sunday = null;
+    switch(dayOfWeek) {
+    case SUNDAY -> sunday = today;
+    case MONDAY -> sunday = today.minusDays(1);
+    case TUESDAY -> sunday = today.minusDays(2);
+    case WEDNESDAY -> sunday = today.minusDays(3);
+    case THURSDAY -> sunday = today.minusDays(4);
+    case FRIDAY -> sunday = today.minusDays(5);
+    case SATURDAY -> sunday = today.minusDays(6);
+    }
+    return sunday;
+}
+
+public int getDayOffset(String day) 
+{
+    int result = 0;
+    switch(day)
+    {
+        case "Sunday":
+            result = 0;
+            break;
+        case "Monday":
+            result = 1;
+            break;
+        case "Tuesday":
+            result = 2;
+            break;
+        case "Wednesday":
+            result = 3;
+            break;
+        case "Thursday":
+            result = 4;
+            break;
+        case "Friday":
+            result = 5;
+            break;
+        case "Saturday":
+            result = 6;
+            break;
+    }
+    return result;
+}
 }
