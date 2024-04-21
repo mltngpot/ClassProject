@@ -5,6 +5,7 @@
 
 package com.cs51540.dialogs;
 
+import com.cs51540.interfaces.IDataRepository;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import java.util.*;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,11 +27,15 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import com.cs51540.models.Schedule;
+import com.cs51540.models.User;
+
 
 public class CreateDialog extends JFrame{
     private Schedule schedule;
+    private IDataRepository DataRepository;
+    private final User[] users;
 
-    public CreateDialog()
+    public CreateDialog(IDataRepository DataRepository)
     {
         super();
         setTitle("Create Event");
@@ -37,7 +44,30 @@ public class CreateDialog extends JFrame{
         // Putting them here so it's easier to change their values
         String[] onlineChoices = {"Online", "In person"};
         String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-        String[] users = {"Jacob DeMuth", "Travis Thurn", "Kenneth Guernsey", "Henry Kroll"};
+        
+        //ArrayList to hold the users and their ids
+        ArrayList<String> userList = new ArrayList<>();
+        ArrayList<Integer> userID = new ArrayList<>();
+        
+        //Get the user list
+        users = DataRepository.GetUsers();
+        
+        //Create a dictionary to associate users and ids
+        Dictionary<String, Integer> dict = new Hashtable<>();
+        for (User user : users)
+        {
+            userList.add(user.Name);
+            userID.add(user.Id);
+            dict.put(user.Name, user.Id);    
+        }
+        
+        //Reversed version of above dictionary
+        Dictionary<Integer, String> revDict = new Hashtable<>();
+        for (User user : users)
+        {
+            revDict.put(user.Id, user.Name);    
+        }
+        
         
         // Create Main Panel with fields
         JPanel mainPanel = new JPanel();
@@ -111,7 +141,9 @@ public class CreateDialog extends JFrame{
         // Users Attending
         // Control Click to select multiple users
         JLabel attendeesLabel = new JLabel("Attendees: ");
-        JList attendeeChoice = new JList(users);
+        
+        String[] array = userList.toArray(new String[0]);
+        JList<String> attendeeChoice = new JList<>(array);
         
         //Create Event
         JButton createButton = new JButton("Create Event");
@@ -167,7 +199,16 @@ public class CreateDialog extends JFrame{
 
         // Add action to the button
         createButton.addActionListener((ActionEvent e) -> {
+            //TODO
+            //set proper IDs
+            int eventId = 0;
+            int ownerId = 1;
+            //basics
+            String Title = eventNameInput.getText();
+            String MeetingType = onlineChoiceInput.getSelectedItem().toString();
+            String Location = locationInput.getText();
             
+            //date stuff
             int startHour = (Integer) startHourChoice.getValue();
             int startMinute = (Integer) startMinuteChoice.getValue();
             String startDay = startDayChoice.getSelectedItem().toString();
@@ -175,20 +216,37 @@ public class CreateDialog extends JFrame{
             
             int endHour = (Integer) endHourChoice.getValue();
             int endMinute = (Integer) endMinuteChoice.getValue();
-            String endDay = endDayChoice.getSelectedItem().toString();
-                       
-            int Owner = 0;
-            
-            String Title = eventNameInput.getText();
+            String endDay = endDayChoice.getSelectedItem().toString();       
             
             LocalDate sunday = getSunday();
             LocalDateTime Start = sunday.plusDays(getDayOffset(startDay)).atTime(startHour, startMinute);
             LocalDateTime End = sunday.plusDays(getDayOffset(endDay)).atTime(endHour, endMinute);
             
-            schedule = new Schedule(Owner,Title,Start,End);    
+            //Attendee
+            int[] userIndex = attendeeChoice.getSelectedIndices();
+            ArrayList<String> selected = new ArrayList<>();
+            ArrayList<Integer> userIDSelected = new ArrayList<>();
+            for(int i = 0; i < userIndex.length; i++)
+            {
+                selected.add(attendeeChoice.getModel().getElementAt(userIndex[i]));
+            }
+            for (String x : selected)
+            {
+                userIDSelected.add(dict.get(x));
+            }
             
-            this.setVisible(false);
+            //TODO
+            //create object
+            //Correct one
+            //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
+            schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
+            //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
+            //System.out.println(getSchedule());
             
+            //TODO
+            //Action Handler to create event properly
+            // call Action Handler
+            //actionPerformed(null);
         });
     }
 
@@ -213,8 +271,33 @@ public class CreateDialog extends JFrame{
         return sunday;
     }
 
-    public int getDayOffset(String day) {
+    public int getDayOffset(String day) 
+    {
         int result = 0;
+        switch(day)
+        {
+            case "Sunday":
+                result = 0;
+                break;
+            case "Monday":
+                result = 1;
+                break;
+            case "Tuesday":
+                result = 2;
+                break;
+            case "Wednesday":
+                result = 3;
+                break;
+            case "Thursday":
+                result = 4;
+                break;
+            case "Friday":
+                result = 5;
+                break;
+            case "Saturday":
+                result = 6;
+                break;
+        }
         return result;
     }
 }

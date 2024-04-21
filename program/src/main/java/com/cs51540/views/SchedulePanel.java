@@ -24,6 +24,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import com.cs51540.dialogs.CreateDialog;
+import com.cs51540.dialogs.EditDialog;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.Slot;
@@ -41,10 +42,10 @@ public class SchedulePanel extends JPanel {
         this.eventListener = new EventListener();
         this.DataRepository = DataRepository;
         CurrentUser = DataRepository.GetUser(0); //TODO Hard coded to 0, need to be able to change
-        setupSchedule();
+        setupSchedule(DataRepository);
     }
 
-    private void setupSchedule() {
+    private void setupSchedule(IDataRepository DataRepository) {
         setLayout(gbl);
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -89,7 +90,7 @@ public class SchedulePanel extends JPanel {
         setBackground(Color.LIGHT_GRAY);
     }
 
-    private void InitializeButtons() {
+    private void InitializeButtons(IDataRepository DataRepository) {
         Border blackline = BorderFactory.createLineBorder(Color.black);
         gbc.gridheight = 1;
         for (int x = 1; x <= 7; x++) {
@@ -120,7 +121,7 @@ public class SchedulePanel extends JPanel {
 
 
     private void showCreateDialog(){
-        CreateDialog dialog = new CreateDialog();
+        CreateDialog dialog = new CreateDialog(DataRepository);
         dialog.setVisible(true);
         dialog.addComponentListener(new ComponentAdapter() {
             @Override
@@ -131,8 +132,8 @@ public class SchedulePanel extends JPanel {
     }
 
     private void showEditDialog(int scheduleId) {                
-        // EditDialog dialog = new EditDialog(DataRepository);
-        // dialog.setVisible(true);
+        EditDialog dialog = new EditDialog(DataRepository);
+        dialog.setVisible(true);
         // dialog.addComponentListener(new ComponentAdapter() {
         //     @Override
         //     public void componentHidden(ComponentEvent arg0) {

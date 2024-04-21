@@ -66,7 +66,7 @@ public class TestDataRepository implements IDataRepository {
         meals.add(supper);
         return meals;
     }
-
+    
     @Override
     public User GetUser(Integer userId) {
         return Users[userId];
@@ -92,9 +92,11 @@ public class TestDataRepository implements IDataRepository {
 
     @Override
     public Schedule GetSchedule(Integer scheduleId) {
+        System.out.println("I triggered");
         return Schedules.get(scheduleId);
     }
 
+ 
     @Override
     public Schedule[] GetUserSchedule(Integer userId) {
         ArrayList<Schedule> usersSchedule = new ArrayList<>();
