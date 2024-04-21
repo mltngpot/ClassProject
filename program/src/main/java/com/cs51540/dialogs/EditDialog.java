@@ -6,14 +6,22 @@
 package com.cs51540.dialogs;
 
 import javax.swing.*;
+
+import com.cs51540.interfaces.IDataRepository;
+import com.cs51540.models.Schedule;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EditDialog extends JFrame {
-    public EditDialog()
+    private IDataRepository DataRepository;
+    private Schedule schedule;
+
+    public EditDialog(IDataRepository DataRepository)
     {
         super();
+        this.DataRepository = DataRepository;
         setTitle("Edit Event");
         setSize(400, 400);
         // Variables that are used throughout the class
@@ -171,5 +179,9 @@ public class EditDialog extends JFrame {
                 setVisible(false);
             }
         });
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
     }
 }
