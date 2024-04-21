@@ -10,7 +10,6 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,7 +30,7 @@ import com.cs51540.models.Schedule;
 import com.cs51540.models.User;
 
 
-public class CreateDialog extends JFrame implements ActionListener{
+public class CreateDialog extends JFrame{
     private Schedule schedule;
     private IDataRepository DataRepository;
     private final User[] users;
@@ -299,10 +298,5 @@ public class CreateDialog extends JFrame implements ActionListener{
                 break;
         }
         return result;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent arg0) {
-
     }
 }
