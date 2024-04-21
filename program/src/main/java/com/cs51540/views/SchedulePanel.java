@@ -77,7 +77,7 @@ public class SchedulePanel extends JPanel {
             e.printStackTrace();
         }
 
-        String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",};
         for (int x = 0; x < daysOfWeek.length; x++) {
             JLabel dayLabel = new JLabel(daysOfWeek[x]);
             dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -86,6 +86,7 @@ public class SchedulePanel extends JPanel {
             gbc.gridy = 0;
             add(dayLabel, gbc);
         }
+        InitializeButtons();
         updateCalendarDisplay();
         setBackground(Color.LIGHT_GRAY);
     }
@@ -158,7 +159,6 @@ public class SchedulePanel extends JPanel {
     }
 
     private void updateCalendarDisplay() {
-        InitializeButtons();
         Schedule[] schedules = DataRepository.GetWeekSchedule(LocalDate.now());
         for(Schedule schedule : schedules){
             try {

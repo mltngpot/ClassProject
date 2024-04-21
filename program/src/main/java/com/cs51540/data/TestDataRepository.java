@@ -51,9 +51,9 @@ public class TestDataRepository implements IDataRepository {
         Schedule dinner = new Schedule(0, 0,  "string", "string","Dinner", day.atTime(18, 00), day.atTime(19, 00) );
         Schedule supper = new Schedule(0, 0, "string", "string", "Supper", day.atTime(21, 00), day.atTime(22, 00) );
 
-        breakfast.AddAddendee(1);
-        breakfast.AddAddendee(2);
-        breakfast.AddAddendee(3);
+    //    breakfast.AddAddendee(1);
+    //    breakfast.AddAddendee(2);
+    //    breakfast.AddAddendee(3);
         
         ArrayList<Schedule> meals = new ArrayList<>();
         meals.add(breakfast);
