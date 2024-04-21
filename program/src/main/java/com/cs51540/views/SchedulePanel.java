@@ -134,12 +134,13 @@ public class SchedulePanel extends JPanel {
     private void showEditDialog(int scheduleId) {                
         EditDialog dialog = new EditDialog(DataRepository);
         dialog.setVisible(true);
-        // dialog.addComponentListener(new ComponentAdapter() {
-        //     @Override
-        //     public void componentHidden(ComponentEvent arg0) {
-        //         doUpdateSchedule(dialog);
-        //     }
-        // });
+        dialog.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentHidden(ComponentEvent arg0) {
+                doUpdateSchedule(dialog);
+            }
+        });
+
     }
 
     private void doAddSchedule(CreateDialog dialog) {
@@ -149,12 +150,12 @@ public class SchedulePanel extends JPanel {
         updateCalendarDisplay();
     }
 
-    // private void doUpdateSchedule(EditDialog dialog) {
-    //     Schedule schedule = dialog.getSchedule();
-    //     DataRepository.UpdateSchedule(schedule);
-    //     dialog.dispose();
-    //     updateCalendarDisplay();
-    // }
+    private void doUpdateSchedule(EditDialog dialog) {
+        Schedule schedule = dialog.getSchedule();
+        DataRepository.UpdateSchedule(schedule);
+        dialog.dispose();
+        updateCalendarDisplay();
+    }
 
     private void updateCalendarDisplay() {
         InitializeButtons();
@@ -242,41 +243,5 @@ public class SchedulePanel extends JPanel {
             System.err.println("Error converting end time to index: " + e.getMessage());
             return -1; // Return -1 for invalid input or errors
         }
-    }
-
-    public ImageIcon getScheduleImageIcon(Schedule schedule, Integer width, Integer height) {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_INDEXED);
-        Color boarderColor = DataRepository.GetUser(schedule.Owner).DisplayColor;
-        
-        for(int y = 0; y < 3; y++){
-            for(int x = 0; x < width; x ++) {
-                image.setRGB(x, y, boarderColor.getRGB());
-                image.setRGB(x, height - y, boarderColor.getRGB());
-            }
-        }
-        for(int x = 0; x < 3; x++){
-            for(int y = 0; y < height; y++) {
-                image.setRGB(x, y, boarderColor.getRGB());
-                image.setRGB(width - x, y, boarderColor.getRGB());
-            }
-        }
-        
-        int stripColorsCount = schedule.Attendees.size() + 1;
-        Color[] stripColors = new Color[stripColorsCount];
-        stripColors[0] = boarderColor; // owners color
-        for(int i = 0; i < schedule.Attendees.size(); i++){
-            stripColors[i + 1] = DataRepository.GetUser(schedule.Attendees.get(i)).DisplayColor;
-        }
-
-        int stripWidth = width / (stripColorsCount * 3);
-        for(int x = 3; x < width - 3; x++) {
-            for(int y = 3; y < height - 3; y++){
-                int color = (x - y) / stripWidth % stripColorsCount;
-                image.setRGB(x, y, stripColors[color].getRGB());
-            }
-        }
-
-        String hoverDescription = schedule.Description;
-        return new ImageIcon(image, hoverDescription);
     }
 }
