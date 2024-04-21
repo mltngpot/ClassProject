@@ -1,14 +1,13 @@
 package com.cs51540.models;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 public class Schedule {
     public Integer Id;
     public Integer Owner;
-    public List<Integer> Attendees;
+    public ArrayList<Integer> Attendees;
     public String Title;
     public LocalDateTime Start;
     public LocalDateTime End;
@@ -20,7 +19,7 @@ public class Schedule {
         this.Title = Title;
         this.Start = Start;
         this.End = End;
-        this.Attendees = new Vector<Integer>();
+        this.Attendees = new ArrayList<>();
     }
 
     public Schedule(Integer Owner, String Title, LocalDateTime Start, LocalDateTime End) {
@@ -28,7 +27,7 @@ public class Schedule {
         this.Title = Title;
         this.Start = Start;
         this.End = End;
-        this.Attendees = new Vector<Integer>();
+        this.Attendees = new ArrayList<>();
     }
     public void AddAddendee(Integer userId) {
         Attendees.add(userId);

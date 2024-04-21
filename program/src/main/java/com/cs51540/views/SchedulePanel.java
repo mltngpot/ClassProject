@@ -1,20 +1,30 @@
 package com.cs51540.views;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.xml.crypto.Data;
-
-import com.cs51540.dialogs.CreateDialog;
-import com.cs51540.interfaces.IDataRepository;
-import com.cs51540.models.Schedule;
-import com.cs51540.models.User;
-
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+
+import com.cs51540.dialogs.CreateDialog;
+import com.cs51540.interfaces.IDataRepository;
+import com.cs51540.models.Schedule;
+import com.cs51540.models.User;
 
 public class SchedulePanel extends JPanel {
     private final EventListener eventListener;
@@ -95,11 +105,11 @@ public class SchedulePanel extends JPanel {
                     // check to see this has a schedule in it
                     CreateDialog dialog = new CreateDialog();
                     dialog.setVisible(true);
-                    dialog.addActionListener((ActionEvent e) -> {
-                        Schedule schedule = dialog.getSchedule();
-                        DataRepository.AddSchedule(schedule);
-                        dialog.dispose();
-                    });
+                    // dialog.addActionListener((ActionEvent e) -> {
+                    //     Schedule schedule = dialog.getSchedule();
+                    //     DataRepository.AddSchedule(schedule);
+                    //     dialog.dispose();
+                    // });
                     updateCalendarDisplay();
                 });
             }
@@ -117,7 +127,8 @@ public class SchedulePanel extends JPanel {
             int endIndex = getSlotIndex(schedule.End);
             User owner = DataRepository.GetUser(schedule.Owner);
             JButton button = buttons[dayIndex][slotIndex];
-            button.setBackground(owner.DisplayColor);
+            Dimension size = button.getSize();
+            button.setIcon(getScheduleImageIcon(schedule, size.width, size.height));
             button.setText(schedule.Title);
             // finish adding schedule information
             // Button row thing
@@ -185,5 +196,41 @@ public class SchedulePanel extends JPanel {
             System.err.println("Error converting end time to index: " + e.getMessage());
             return -1; // Return -1 for invalid input or errors
         }
+    }
+
+    public ImageIcon getScheduleImageIcon(Schedule schedule, Integer width, Integer height) {
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_INDEXED);
+        Color boarderColor = DataRepository.GetUser(schedule.Owner).DisplayColor;
+        
+        for(int y = 0; y < 3; y++){
+            for(int x = 0; x < width; x ++) {
+                image.setRGB(x, y, boarderColor.getRGB());
+                image.setRGB(x, height - y, boarderColor.getRGB());
+            }
+        }
+        for(int x = 0; x < 3; x++){
+            for(int y = 0; y < height; y++) {
+                image.setRGB(x, y, boarderColor.getRGB());
+                image.setRGB(width - x, y, boarderColor.getRGB());
+            }
+        }
+        
+        int stripColorsCount = schedule.Attendees.size() + 1;
+        Color[] stripColors = new Color[stripColorsCount];
+        stripColors[0] = boarderColor; // owners color
+        for(int i = 0; i < schedule.Attendees.size(); i++){
+            stripColors[i + 1] = DataRepository.GetUser(schedule.Attendees.get(i)).DisplayColor;
+        }
+
+        int stripWidth = width / (stripColorsCount * 3);
+        for(int x = 3; x < width - 3; x++) {
+            for(int y = 3; y < height - 3; y++){
+                int color = (x - y) / stripWidth % stripColorsCount;
+                image.setRGB(x, y, stripColors[color].getRGB());
+            }
+        }
+
+        String hoverDescription = schedule.Description;
+        return new ImageIcon(image, hoverDescription);
     }
 }
