@@ -90,7 +90,7 @@ public class SchedulePanel extends JPanel {
         setBackground(Color.LIGHT_GRAY);
     }
 
-    private void InitializeButtons(IDataRepository DataRepository) {
+    private void InitializeButtons() {
         Border blackline = BorderFactory.createLineBorder(Color.black);
         gbc.gridheight = 1;
         for (int x = 1; x <= 7; x++) {
