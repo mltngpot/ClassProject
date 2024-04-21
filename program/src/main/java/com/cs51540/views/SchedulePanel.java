@@ -86,12 +86,13 @@ public class SchedulePanel extends JPanel {
             gbc.gridy = 0;
             add(dayLabel, gbc);
         }
-        InitializeButtons(DataRepository);
+        updateCalendarDisplay();
         setBackground(Color.LIGHT_GRAY);
     }
 
     private void InitializeButtons(IDataRepository DataRepository) {
         Border blackline = BorderFactory.createLineBorder(Color.black);
+        gbc.gridheight = 1;
         for (int x = 1; x <= 7; x++) {
             for (int y = 1; y <= 25; y++) {
                 gbc.gridx = x;
@@ -156,8 +157,7 @@ public class SchedulePanel extends JPanel {
     // }
 
     private void updateCalendarDisplay() {
-        //InitializeButtons();
-
+        InitializeButtons();
         Schedule[] schedules = DataRepository.GetWeekSchedule(LocalDate.now());
         for(Schedule schedule : schedules){
             try {
@@ -169,8 +169,15 @@ public class SchedulePanel extends JPanel {
             slot.setBackground(owner.DisplayColor);
             slot.setText(schedule.Title);
             slot.setId(schedule.Id);
-            // Dimension size = slot.getSize();
-            // slot.setIcon(getScheduleImageIcon(schedule, size.width, size.height));
+            gbc.gridheight = endIndex - slotIndex;
+            gbc.gridx = dayIndex + 1;
+            gbc.gridy = slotIndex + 1;
+            gbl.setConstraints(slot, gbc);
+            if (endIndex - slotIndex != 1){
+                for (int x = 1; x <= (endIndex - slotIndex - 1); x++){
+                    slots[dayIndex][slotIndex+x].setVisible(false);
+                }
+            }
             }
             catch (Exception e)
             {
@@ -198,7 +205,7 @@ public class SchedulePanel extends JPanel {
 
     private int getSlotIndex(LocalDateTime time) throws Exception {
         int result;
-        int hour = time.getHour() - 7;
+        int hour = time.getHour() - 8;
         int minute = time.getMinute();
         if (hour < 0 && hour > 12)
             throw new Exception("Time out of range");
