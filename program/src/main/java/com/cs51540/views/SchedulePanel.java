@@ -6,6 +6,7 @@ import javax.swing.border.*;
 import javax.xml.crypto.Data;
 
 import com.cs51540.dialogs.CreateDialog;
+import com.cs51540.dialogs.EditDialog;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.Slot;
@@ -117,24 +118,53 @@ public class SchedulePanel extends JPanel {
                 int startTime = y - 1;  // Start time calculation
                 slot.addActionListener(new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // add edit functionality
-                        // check to see this has a schedule in it
-                        CreateDialog dialog = new CreateDialog();
-                        dialog.setVisible(true);
-                        dialog.addComponentListener(new ComponentAdapter() {
-                            @Override
-                            public void componentHidden(ComponentEvent arg0) {
-                                Schedule schedule = dialog.getSchedule();
-                                DataRepository.AddSchedule(schedule);
-                                dialog.dispose();
-                                updateCalendarDisplay();
-                            }
-                        });
+                    public void actionPerformed(ActionEvent e) {  
+                        if(slot.getId() > 0){
+                            showEditDialog();
+                        } else {
+                            showCreateDialog();
+                        }
                     }
                 });
             }
         }
+    }
+
+
+    private void showCreateDialog(){
+        CreateDialog dialog = new CreateDialog();
+        dialog.setVisible(true);
+        dialog.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentHidden(ComponentEvent arg0) {
+                doAddSchedule(dialog);
+            }
+        });
+    }
+
+    private void showEditDialog(int scheduleId) {                
+        EditDialog dialog = new EditDialog(DataRepository);
+        dialog.setVisible(true);
+        dialog.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentHidden(ComponentEvent arg0) {
+                doUpdateSchedule();
+            }
+        });
+    }
+
+    private void doAddSchedule(CreateDialog dialog) {
+        Schedule schedule = dialog.getSchedule();
+        DataRepository.AddSchedule(schedule);
+        dialog.dispose();
+        updateCalendarDisplay();
+    }
+
+    private void doUpdateSchedule(EditDialog dialog) {
+        Schedule schedule = dialog.getSchedule();
+        DataRepository.UpdateSchedule(schedule);
+        dialog.dispose();
+        updateCalendarDisplay();
     }
 
     private void updateCalendarDisplay() {
@@ -150,8 +180,8 @@ public class SchedulePanel extends JPanel {
             Slot slot = slots[dayIndex][slotIndex];
             slot.setBackground(owner.DisplayColor);
             slot.setText(schedule.Title);
-            Dimension size = button.getSize();
-            slot.setIcon(getScheduleImageIcon(schedule, size.width, size.height));
+            // Dimension size = slot.getSize();
+            // slot.setIcon(getScheduleImageIcon(schedule, size.width, size.height));
             // finish adding schedule information
             // Button row thing
             }
