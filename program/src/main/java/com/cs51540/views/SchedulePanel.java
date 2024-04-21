@@ -127,6 +127,7 @@ public class SchedulePanel extends JPanel {
             @Override
             public void componentHidden(ComponentEvent arg0) {
                 doAddSchedule(dialog);
+                dialog.setVisible(false);
             }
         });
     }
@@ -157,7 +158,7 @@ public class SchedulePanel extends JPanel {
     // }
 
     private void updateCalendarDisplay() {
-        InitializeButtons();
+        InitializeButtons(DataRepository);
         Schedule[] schedules = DataRepository.GetWeekSchedule(LocalDate.now());
         for(Schedule schedule : schedules){
             try {

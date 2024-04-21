@@ -43,17 +43,17 @@ public class TestDataRepository implements IDataRepository {
     }
 
     private ArrayList<Schedule> getMeals(LocalDate day) {
-        Schedule breakfast = new Schedule(0, 0, "Breakfast", day.atTime(8, 00), day.atTime(8, 30) );
-        Schedule secondBreakfast = new Schedule(0, 0, "Second Breakfast", day.atTime(9, 00), day.atTime(9, 30) );
-        Schedule elevensies = new Schedule(0, 0, "Elevenses", day.atTime(11, 00), day.atTime(12, 45) );
-        Schedule luncheon = new Schedule(0, 0, "Luncheon", day.atTime(13, 00), day.atTime(13, 30) );
-        Schedule afternoonTea = new Schedule(0, 0, "Afternoon Tea", day.atTime(15, 00), day.atTime(15, 30) );
-        Schedule dinner = new Schedule(0, 0, "Dinner", day.atTime(18, 00), day.atTime(19, 00) );
-        Schedule supper = new Schedule(0, 0, "Supper", day.atTime(21, 00), day.atTime(22, 00) );
+        Schedule breakfast = new Schedule(0, 0, "Breakfast", "Online", "My Room",  day.atTime(8, 00), day.atTime(8, 30) );
+        Schedule secondBreakfast = new Schedule(0, 0,"Online", "My Room", "Second Breakfast", day.atTime(9, 00), day.atTime(9, 30) );
+        Schedule elevensies = new Schedule(0, 0, "Elevenses","Online", "My Room",day.atTime(11, 00), day.atTime(12, 45) );
+        Schedule luncheon = new Schedule(0, 0, "Luncheon","Online", "My Room", day.atTime(13, 00), day.atTime(13, 30) );
+        Schedule afternoonTea = new Schedule(0, 0,"Online", "My Room", "Afternoon Tea", day.atTime(15, 00), day.atTime(15, 30) );
+        Schedule dinner = new Schedule(0, 0, "Dinner","Online", "My Room", day.atTime(18, 00), day.atTime(19, 00) );
+        Schedule supper = new Schedule(0, 0, "Supper","Online", "My Room", day.atTime(21, 00), day.atTime(22, 00) );
 
-        breakfast.AddAddendee(1);
-        breakfast.AddAddendee(2);
-        breakfast.AddAddendee(3);
+        //breakfast.AddAddendee(1);
+        //breakfast.AddAddendee(2);
+       // breakfast.AddAddendee(3);
         
         ArrayList<Schedule> meals = new ArrayList<>();
         meals.add(breakfast);
