@@ -9,7 +9,6 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,7 +25,7 @@ import javax.swing.SpinnerNumberModel;
 
 import com.cs51540.models.Schedule;
 
-public class CreateDialog extends JFrame implements ActionListener{
+public class CreateDialog extends JFrame{
     private Schedule schedule;
 
     public CreateDialog()
@@ -186,10 +185,10 @@ public class CreateDialog extends JFrame implements ActionListener{
             LocalDateTime Start = sunday.plusDays(getDayOffset(startDay)).atTime(startHour, startMinute);
             LocalDateTime End = sunday.plusDays(getDayOffset(endDay)).atTime(endHour, endMinute);
             
-            schedule = new Schedule(Owner,Title,Start,End);       
+            schedule = new Schedule(Owner,Title,Start,End);    
             
-            // call Action Handler
-            actionPerformed(null);
+            this.setVisible(false);
+            
         });
     }
 
@@ -217,10 +216,5 @@ public class CreateDialog extends JFrame implements ActionListener{
     public int getDayOffset(String day) {
         int result = 0;
         return result;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent arg0) {
-
     }
 }
