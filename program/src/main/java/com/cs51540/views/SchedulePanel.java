@@ -204,7 +204,7 @@ public class SchedulePanel extends JPanel {
 
     private int getSlotIndex(LocalDateTime time) throws Exception {
         int result;
-        int hour = time.getHour() - 7;
+        int hour = time.getHour() - 8;
         int minute = time.getMinute();
         if (hour < 0 && hour > 12)
             throw new Exception("Time out of range");
@@ -212,7 +212,7 @@ public class SchedulePanel extends JPanel {
         if (minute >= 30)
             result++;
             
-        return result - 2;
+        return result;
     }
 
     public static int convertEndTimeToIndex(String endTime) {
