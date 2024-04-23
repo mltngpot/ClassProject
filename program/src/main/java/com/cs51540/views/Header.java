@@ -13,7 +13,7 @@ public class Header extends JPanel {
 		this.DataRepository = DataRepository;
 		BorderLayout layout = new BorderLayout();
 		setLayout(layout);
-		add(new JLabel("This is an example Header for components!"),BorderLayout.WEST);
+		//add(new JLabel("This is an example Header for components!"),BorderLayout.WEST);
 		add(cb, BorderLayout.EAST);
 	}
 

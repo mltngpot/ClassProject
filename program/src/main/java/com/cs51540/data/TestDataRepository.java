@@ -16,10 +16,10 @@ public class TestDataRepository implements IDataRepository {
 
     public TestDataRepository() {
         Users = new User[4];
-        Users[0] = new User(0, Color.blue, "Frodo Baggins");
-        Users[1] = new User(1, Color.green, "Samwise Gamgee");
-        Users[2] = new User(2, Color.red, "Merry Brandybuck");
-        Users[3] = new User(3, Color.yellow, "Pippin Took");
+        Users[0] = new User(0, Color.blue, "Kenneth");
+        Users[1] = new User(1, Color.green, "Henry");
+        Users[2] = new User(2, Color.red, "Jacob");
+        Users[3] = new User(3, Color.yellow, "Travis");
 
         Schedules = GenerateSchedules(LocalDate.now());
     }
