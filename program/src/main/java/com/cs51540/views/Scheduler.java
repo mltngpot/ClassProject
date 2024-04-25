@@ -3,10 +3,10 @@ package com.cs51540.views;
 import java.awt.*;
 import javax.swing.*;
 
-import com.cs51540.interfaces.IDataRepository;
+import com.cs51540.data.DataRepository;;
 
 public class Scheduler extends JFrame{
-    public Scheduler(IDataRepository DataRepository){
+    public Scheduler(DataRepository DataRepository){
 		setTitle("PNW Scheduler");
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);

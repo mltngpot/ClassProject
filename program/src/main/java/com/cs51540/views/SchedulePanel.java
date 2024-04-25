@@ -26,10 +26,11 @@ import javax.swing.JButton;
 
 import com.cs51540.dialogs.CreateDialog;
 import com.cs51540.dialogs.EditDialog;
-import com.cs51540.interfaces.IDataRepository;
+//import com.cs51540.interfaces.DataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.Slot;
 import com.cs51540.models.User;
+import com.cs51540.data.DataRepository;;
 
 public class SchedulePanel extends JPanel {
     private final EventListener eventListener;
@@ -37,16 +38,16 @@ public class SchedulePanel extends JPanel {
     GridBagLayout gbl = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
     private User CurrentUser;
-    private IDataRepository DataRepository;
+    private  DataRepository DataRepository;
 
-    public SchedulePanel(IDataRepository DataRepository) {
+    public SchedulePanel( DataRepository DataRepository) {
         this.eventListener = new EventListener();
         this.DataRepository = DataRepository;
         CurrentUser = DataRepository.GetUser(0); //TODO Hard coded to 0, need to be able to change
         setupSchedule(DataRepository);
     }
 
-    private void setupSchedule(IDataRepository DataRepository) {
+    private void setupSchedule( DataRepository DataRepository) {
         setLayout(gbl);
         gbc.gridx = 0;
         gbc.gridy = 0;
