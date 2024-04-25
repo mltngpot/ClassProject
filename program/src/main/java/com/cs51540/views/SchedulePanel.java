@@ -132,32 +132,32 @@ public class SchedulePanel extends JPanel {
         Border blackline = BorderFactory.createLineBorder(Color.black);
         gbc.gridheight = 1;
         gbc.gridx = dayIndex + 1;
-        Slot slot = new Slot();
-        slot.setBorder(blackline);
-        slot.setBackground(Color.BLACK);
-        slot.setOpaque(true);
+        
         for (int start = slotIndex; start < endIndex; start++){
-            this.remove(slots[dayIndex][start]);
-
+            slots[dayIndex][start].setVisible(false);
         }
+        
         for (int start = slotIndex; start < endIndex; start++){
-            System.out.println(start);
+            Slot slot = new Slot();
             gbc.gridy = start + 1;
+            slot.setBorder(blackline);
+            slot.setBackground(Color.WHITE);
+            slot.setOpaque(true);
+            gbl.setConstraints(slot, gbc);
             add(slot,gbc);
-            slots[dayIndex - 1][slotIndex - 1] = slot;
-        }
-        slot.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {  
-                System.out.println(slot.getId());
-                if(slot.getId() > 0){
-                    showEditDialog(slot.getId());
-                } else {
-                    showCreateDialog();
+            slot.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {  
+                    System.out.println(slot.getId());
+                    if(slot.getId() > 0){
+                        showEditDialog(slot.getId());
+                    } else {
+                        showCreateDialog();
+                    }
                 }
+            });
             }
-        });
-        } catch (Exception e) {
+        }catch (Exception e) {
             // TODO: handle exception
         }
 }
