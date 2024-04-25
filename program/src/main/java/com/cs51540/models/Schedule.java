@@ -42,7 +42,8 @@ public class Schedule {
         this.Title = Title;
         this.Start = Start;
         this.End = End;
-        System.out.println(Id + Owner + MeetingType + Location + Title + Start + End);
+        System.out.println(Start);
+        System.out.println(End);
     }
 
     /*public Schedule(Integer Owner, String Title, LocalDateTime Start, LocalDateTime End) {

@@ -242,7 +242,7 @@ public class CreateDialog extends JFrame{
             schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
             //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
             //System.out.println(getSchedule());
-            
+            //setVisible(false);
             //TODO
             //Action Handler to create event properly
             // call Action Handler
