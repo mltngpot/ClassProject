@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,9 +31,11 @@ import com.cs51540.dialogs.EditDialog;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.Slot;
 import com.cs51540.models.User;
-import com.cs51540.data.DataRepository;;
+import com.cs51540.data.DataRepository;
+import com.cs51540.data.ScheduleIO;;
 
 public class SchedulePanel extends JPanel {
+    ScheduleIO scheduleio = new ScheduleIO("C:\\Users\\Henry\\Documents\\College\\Object-Oriented Design, Analysis And Programming\\Project\\ClassProject\\scheduledata");//TODO This will have to be changed to a relative path
     private final EventListener eventListener;
     private final Slot[][] slots = new Slot[7][25];
     GridBagLayout gbl = new GridBagLayout();
@@ -40,14 +43,14 @@ public class SchedulePanel extends JPanel {
     private User CurrentUser;
     private  DataRepository DataRepository;
 
-    public SchedulePanel( DataRepository DataRepository) {
+    public SchedulePanel(DataRepository DataRepository) {
         this.eventListener = new EventListener();
         this.DataRepository = DataRepository;
         CurrentUser = DataRepository.GetUser(0); //TODO Hard coded to 0, need to be able to change
         setupSchedule(DataRepository);
     }
 
-    private void setupSchedule( DataRepository DataRepository) {
+    private void setupSchedule(DataRepository dataRepository) {
         setLayout(gbl);
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -60,8 +63,26 @@ public class SchedulePanel extends JPanel {
         gbc.insets = new Insets(1, 1, 1, 1);
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
-
+    
+        // Create and add the save button
+        JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    scheduleio.saveSchedule(dataRepository.GetSchedule(CurrentUser.Id));
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
+        });
+        gbc.gridx = 0; // Place the button in the first column
+        gbc.gridy = 0; // Place the button in the first row
+        add(saveButton, gbc);
+    
         try {
+            // Time labels setup
             String time = "7:30";
             SimpleDateFormat df = new SimpleDateFormat("HH:mm");
             Date d = df.parse(time);
@@ -72,25 +93,27 @@ public class SchedulePanel extends JPanel {
                 cal.add(Calendar.MINUTE, interval);
                 gbc.gridy = x;
                 JLabel timeLabel = new JLabel(df.format(cal.getTime()));
-                timeLabel.setFont(new Font("Dialog",Font.BOLD,12));
+                timeLabel.setFont(new Font("Dialog", Font.BOLD, 12));
                 add(timeLabel, gbc);
             }
+
+            // Days of week labels setup
+            String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+            for (int x = 0; x < daysOfWeek.length; x++) {
+                JLabel dayLabel = new JLabel(daysOfWeek[x]);
+                dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                dayLabel.setFont(new Font("Dialog", Font.BOLD, 18));
+                gbc.gridx = x + 1;
+                gbc.gridy = 0;
+                add(dayLabel, gbc);
+            }
+    
+            InitializeButtons();
+            updateCalendarDisplay();
+            setBackground(Color.LIGHT_GRAY);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",};
-        for (int x = 0; x < daysOfWeek.length; x++) {
-            JLabel dayLabel = new JLabel(daysOfWeek[x]);
-            dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            dayLabel.setFont(new Font("Dialog",Font.BOLD,18));
-            gbc.gridx = x + 1;
-            gbc.gridy = 0;
-            add(dayLabel, gbc);
-        }
-        InitializeButtons();
-        updateCalendarDisplay();
-        setBackground(Color.LIGHT_GRAY);
     }
 
     private void InitializeButtons() {
