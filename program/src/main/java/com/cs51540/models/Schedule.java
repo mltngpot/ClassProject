@@ -56,7 +56,7 @@ public class Schedule {
         this.Attendees = new ArrayList<>();
     }*/
     
-    public void AddAddendee(Integer userId) {
+    public void AddAttendee(Integer userId) {
         Attendees.add(userId);
     }
             
