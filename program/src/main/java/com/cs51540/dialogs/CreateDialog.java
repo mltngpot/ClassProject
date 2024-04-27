@@ -51,6 +51,7 @@ public class CreateDialog extends JFrame{
         
         //Get the user list
         users = DataRepository.GetUsers();
+        System.out.println(users);
         
         //Create a dictionary to associate users and ids
         Dictionary<String, Integer> dict = new Hashtable<>();
@@ -99,7 +100,7 @@ public class CreateDialog extends JFrame{
         
         // Start Hour
         JLabel startHourLabel = new JLabel("Start Hour: ");
-        JSpinner startHourChoice = new JSpinner(new SpinnerNumberModel(1, 1, 24, 1));
+        JSpinner startHourChoice = new JSpinner(new SpinnerNumberModel(8, 8, 20, 1));
         startHourChoice.setBounds(70, 130, 50, 40);
         //Added this so we don't have to do data validation on time
         //Remove line if we want users to be able to type the number
@@ -122,7 +123,7 @@ public class CreateDialog extends JFrame{
         
         // End Hour
         JLabel endHourLabel = new JLabel("End Hour: ");
-        JSpinner endHourChoice = new JSpinner(new SpinnerNumberModel(1, 1, 24, 1));
+        JSpinner endHourChoice = new JSpinner(new SpinnerNumberModel(8, 8, 20, 1));
         endHourChoice.setBounds(70, 130, 50, 40);
         //Added this so we don't have to do data validation on time
         //Remove line if we want users to be able to type the number
@@ -239,6 +240,7 @@ public class CreateDialog extends JFrame{
             //create object
             //Correct one
             schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
+            dispose();
            // schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
             //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
             //System.out.println(getSchedule());
