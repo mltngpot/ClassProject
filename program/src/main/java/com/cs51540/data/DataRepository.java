@@ -1,6 +1,5 @@
 package com.cs51540.data;
 
-import java.awt.Color;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +19,6 @@ public class DataRepository implements IDataRepository {
     public DataRepository() {
         usersMap = new HashMap<>();
         schedulesMap = new HashMap<>();
-        usersMap.put(0, new User(0, Color.blue, "Kenneth Guernsey"));
-        usersMap.put(1, new User(1, Color.green, "Henry Kroll"));
-        usersMap.put(2, new User(2, Color.red, "Jacob DeMuth"));
-        usersMap.put(3, new User(3, Color.yellow, "Travis Thurn"));
 
         //kenny testing Stuff
         ArrayList<Integer> a = new ArrayList<Integer>();
@@ -32,9 +27,25 @@ public class DataRepository implements IDataRepository {
         Schedule breakfast = new Schedule(0, 1, "string", "string", "Breakfast", day.atTime(8, 00), day.atTime(8, 30),a);
         AddSchedule(breakfast);
         ScheduleIO sio = new ScheduleIO(this);
-        sio.saveUsers();
-        // sio.loadUsers();
-        // sio.loadSchedules();
+        loadUsers(sio);
+        loadSchedules(sio);
+    }
+
+    private void loadUsers(ScheduleIO sio) {
+        User[] users = sio.loadUsers();
+        for(int i = 0; i < users.length; i++) {
+            usersMap.put(users[i].Id, users[i]);
+        }
+    }
+
+    private void loadSchedules(ScheduleIO sio) {
+        Schedule[] schedules = sio.loadSchedules();
+        for(int i = 0; i < schedules.length; i++) {
+            if(schedulesMap.containsKey(schedules[i].Id))
+                continue;
+            schedulesMap.put(schedules[i].Id, schedules[i]);
+        }
+
     }
 
     @Override

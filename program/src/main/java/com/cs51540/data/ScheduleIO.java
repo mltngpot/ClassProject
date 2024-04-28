@@ -1,7 +1,7 @@
 package com.cs51540.data;
 
+import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
@@ -9,8 +9,11 @@ import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.awt.Color;
 
-
+import com.cs51540.data.TypeAdapters.ColorAdapter;
+import com.cs51540.data.TypeAdapters.DataTimeAdapter;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.User;
@@ -20,12 +23,16 @@ import com.google.gson.reflect.TypeToken;
 
 public class ScheduleIO {
     private final Gson gson;
+    private final GsonBuilder GsonBuilder;
     private final String dataDirectory;
     private final IDataRepository dataRepository;
 
     public ScheduleIO(IDataRepository dataRepository) {
         this.dataRepository = dataRepository;
-        this.gson = new GsonBuilder().setPrettyPrinting().create();
+        this.GsonBuilder = new GsonBuilder();
+        this.GsonBuilder.registerTypeAdapter(Color.class, new ColorAdapter());
+        this.GsonBuilder.registerTypeAdapter(LocalDateTime.class, new DataTimeAdapter());
+        this.gson = GsonBuilder.setPrettyPrinting().create(); 
         dataDirectory = FileSystems.getDefault().getPath("").toAbsolutePath().toString();
     }
 
