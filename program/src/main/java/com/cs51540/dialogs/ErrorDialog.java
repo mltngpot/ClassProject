@@ -21,7 +21,7 @@ public class ErrorDialog extends JFrame {
         setSize(250, 150);
         JPanel mainPanel = new JPanel();
         
-        JLabel eventNameLabel = new JLabel("A Error has occured ");
+        JLabel eventNameLabel = new JLabel("A Conflict has occured ");
         JButton okButton = new JButton("Ok");
         
         mainPanel.add(eventNameLabel);  
@@ -31,6 +31,7 @@ public class ErrorDialog extends JFrame {
         
         okButton.addActionListener((ActionEvent e) -> {
             setVisible(false);
+            this.dispose();
         });
     }
 }

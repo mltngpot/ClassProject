@@ -55,7 +55,8 @@ public class DataRepository implements IDataRepository {
     }
 
     @Override
-    public Integer AddSchedule(Schedule schedule) {
+    public Integer AddSchedule(Schedule schedule) throws Exception {
+        checkConflict(schedule);
         int scheduleId = ++currentId; // Generate a new ID
         schedule.setId(scheduleId);
         schedulesMap.put(scheduleId, schedule);
@@ -63,12 +64,28 @@ public class DataRepository implements IDataRepository {
     }
 
     @Override
-    public void UpdateSchedule(Schedule schedule) {
+    public void UpdateSchedule(Schedule schedule) throws Exception {
+        checkConflict(schedule);
         if (schedulesMap.containsKey(schedule.Id)) {
             schedulesMap.remove(schedule.Id);
             schedulesMap.put(schedule.Id, schedule);
         } else {
             throw new IllegalArgumentException("Schedule not found");
+        }
+    }
+
+    private void checkConflict(Schedule schedule) throws Exception{
+        ArrayList<Integer> scheduledUsers = (ArrayList)schedule.Attendees.clone();
+        Schedule[] schedules = GetWeekSchedule(schedule.Start.toLocalDate());
+        for(int i = 0; i < schedules.length; i++) {
+            if(schedules[i].Id == schedule.Id) continue;
+            if(schedules[i].Start.isAfter(schedule.End) || schedules[i].End.isBefore(schedule.Start)) continue;
+            boolean hasMember = scheduledUsers.contains(schedules[i].Owner);
+            for(int j = 0; i < schedules[i].Attendees.size(); i++) {
+                hasMember = hasMember && scheduledUsers.contains(schedules[i].Attendees.get(j));
+            }
+            if(!hasMember) 
+                throw new Exception("CONFLICT");
         }
     }
 
