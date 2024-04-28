@@ -1,14 +1,26 @@
 [
   {
+    "Id": 1,
+    "Owner": 0,
+    "MeetingType": "In person",
+    "Location": "",
+    "Attendees": [
+      1
+    ],
+    "Title": "Kenneth to Henry",
+    "Start": "2024-04-28 08:00:00",
+    "End": "2024-04-28 10:00:00"
+  },
+  {
     "Id": 2,
     "Owner": 1,
     "MeetingType": "In person",
     "Location": "",
     "Attendees": [
-      0
+      2
     ],
-    "Title": "Travis to Kenneth",
-    "Start": "2024-04-29 14:00:00",
-    "End": "2024-04-29 16:00:00"
+    "Title": "Henry to Jacob",
+    "Start": "2024-04-29 10:00:00",
+    "End": "2024-04-29 12:00:00"
   }
 ]
