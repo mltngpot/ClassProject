@@ -171,6 +171,8 @@ public class SchedulePanel extends JPanel {
             @Override
             public void componentHidden(ComponentEvent arg0) {
                 doUpdateSchedule(dialog);
+                InitializeButtons();
+                updateCalendarDisplay();
             }
         });
     }
