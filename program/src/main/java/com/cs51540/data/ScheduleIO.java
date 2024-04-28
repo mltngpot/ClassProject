@@ -9,9 +9,11 @@ import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.awt.Color;
 
 import com.cs51540.data.TypeAdapters.ColorAdapter;
+import com.cs51540.data.TypeAdapters.DataTimeAdapter;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.User;
@@ -30,6 +32,7 @@ public class ScheduleIO {
         this.dataRepository = dataRepository;
         this.GsonBuilder = new GsonBuilder();
         this.GsonBuilder.registerTypeAdapter(Color.class, new ColorAdapter());
+        this.GsonBuilder.registerTypeAdapter(LocalDateTime.class, new DataTimeAdapter());
         this.gson = GsonBuilder.setPrettyPrinting().create(); 
         dataDirectory = FileSystems.getDefault().getPath("").toAbsolutePath().toString();
     }
