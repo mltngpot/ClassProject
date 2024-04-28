@@ -43,7 +43,7 @@ public class DialogTest {
           //  EditDialog frame1 = new EditDialog();
           //  frame1.setVisible(true);
         });
-        
+        /*
         // Add action to the button
         deleteButton.addActionListener((ActionEvent e) -> {
             DeleteDialog frame1 = new DeleteDialog();
@@ -55,5 +55,6 @@ public class DialogTest {
             ErrorDialog frame1 = new ErrorDialog();
             frame1.setVisible(true);
         });
+        */
     }
 }
