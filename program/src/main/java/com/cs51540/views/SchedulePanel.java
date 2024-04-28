@@ -230,45 +230,15 @@ public class SchedulePanel extends JPanel {
     }
 
     private void updateCalendarDisplay() {
-      /* Schedule[] schedules = DataRepository.GetWeekSchedule(LocalDate.now());
-        
+        User user = header.getUser();
+        Schedule schedules[];
+        if (user.Id == -1){
+            schedules = DataRepository.GetWeekSchedule(LocalDate.now());
+        } else{
+            schedules = DataRepository.GetUserSchedule(user.Id);
+        }        
         for(Schedule schedule : schedules){
             try {
-            int dayIndex = getDayIndex(schedule.Start);
-            int slotIndex = getSlotIndex(schedule.Start);
-            int endIndex = getSlotIndex(schedule.End);
-            User owner = DataRepository.GetUser(schedule.Owner);
-            Slot slot = slots[dayIndex][slotIndex];
-            slot.setBackground(owner.DisplayColor);
-            slot.setText(schedule.Title);
-            slot.setId(schedule.Id);
-            gbc.gridheight = endIndex - slotIndex;
-            gbc.gridx = dayIndex + 1;
-            gbc.gridy = slotIndex + 1;
-            gbl.setConstraints(slot, gbc);
-            if (endIndex - slotIndex != 1){
-                for (int x = 1; x <= (endIndex - slotIndex - 1); x++){
-                    slots[dayIndex][slotIndex+x].setVisible(false);
-                }
-            }
-            }
-            catch (Exception e)
-            {
-                System.err.println("Schedule Id: " + schedule.Id + "Handling Error");
-                System.err.println(e.getMessage());
-            }
-        }
-            */
-
-            User user = header.getUser();
-            Schedule schedules[];
-            if (user.Id == -1){
-                schedules = DataRepository.GetWeekSchedule(LocalDate.now());
-            } else{
-                schedules = DataRepository.GetUserSchedule(user.Id);
-            }        
-            for(Schedule schedule : schedules){
-                try {
                 int dayIndex = getDayIndex(schedule.Start);
                 int slotIndex = getSlotIndex(schedule.Start);
                 int endIndex = getSlotIndex(schedule.End);
@@ -286,12 +256,12 @@ public class SchedulePanel extends JPanel {
                         slots[dayIndex][slotIndex+x].setVisible(false);
                     }
                 }
-                }
-                catch (Exception e)
-                {
-                    System.err.println("Schedule Id: " + schedule.Id + "Handling Error");
-                    System.err.println(e.getMessage());
-                }
+            }
+            catch (Exception e)
+            {
+                System.err.println("Schedule Id: " + schedule.Id + "Handling Error");
+                System.err.println(e.getMessage());
+            }
         }      
 	}
 
