@@ -13,5 +13,6 @@ public interface IDataRepository {
     Schedule GetSchedule(Integer scheduleId);
     Schedule[] GetUserSchedule(Integer userId);
     Schedule[] GetWeekSchedule(LocalDate weekOfDate);
+    void DeleteSchedule(Integer scheduleId);
     void Save();
 }

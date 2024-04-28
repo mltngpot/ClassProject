@@ -7,11 +7,17 @@ package com.cs51540.dialogs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.dnd.InvalidDnDOperationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import com.cs51540.interfaces.IDataRepository;
+import com.cs51540.models.Schedule;
+
 
 public class DeleteDialog extends JFrame {
-    public DeleteDialog()
+    private IDataRepository DataRepository;
+
+    public DeleteDialog(IDataRepository DataRepository, int scheduleId)
     {
         super();
         setTitle("Delete Event");
@@ -26,13 +32,15 @@ public class DeleteDialog extends JFrame {
         mainPanel.add(yesButton);
         mainPanel.add(noButton);
         
-        add(mainPanel);
-        
+        add(mainPanel);        
         yesButton.addActionListener(new ActionListener() 
         {
             @Override
             public void actionPerformed(ActionEvent e) 
             {
+
+                int eventId = scheduleId;
+                DataRepository.DeleteSchedule(eventId);
                 JOptionPane.showMessageDialog(yesButton, "Event Deleted!");
                 setVisible(false);
             }

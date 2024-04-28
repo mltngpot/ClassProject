@@ -5,6 +5,7 @@
 
 package com.cs51540.dialogs;
 
+import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import com.cs51540.interfaces.IDataRepository;
+import com.cs51540.data.DataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.User;
 
@@ -49,9 +51,7 @@ public class EditDialog extends JFrame {
      
         // Create Main Panel with fields
         JPanel mainPanel = new JPanel();
-        
-        this.DataRepository = DataRepository;
-        
+                
         // TODO 
         // Remove test ID variable
         int id = scheduleId;
@@ -243,6 +243,8 @@ public class EditDialog extends JFrame {
         
         // Cancel Changes
         JButton cancelButton = new JButton("Cancel");
+
+        JButton deleteButton = new JButton("Delete");
         
         // Set the component layout to not look totally awful
         // Essentially creates a label on left and input on right format
@@ -289,8 +291,9 @@ public class EditDialog extends JFrame {
         mainPanel.add(attendeesLabel, left);
         mainPanel.add(attendeeChoice, right);
         
-        mainPanel.add(saveButton);
+        mainPanel.add(saveButton, left);
         mainPanel.add(cancelButton);
+        mainPanel.add(deleteButton, right);
         
         add(mainPanel);
         
@@ -340,7 +343,6 @@ public class EditDialog extends JFrame {
                 schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
 
                 JOptionPane.showMessageDialog(saveButton, "Changes Saved");
-                
                 setVisible(false);
             }
         });
@@ -350,7 +352,21 @@ public class EditDialog extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) 
             {
-                setVisible(false);
+                //setVisible(false);
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                try{
+                DeleteDialog delete = new DeleteDialog(DataRepository,scheduleId);
+                delete.setVisible(true);
+                } finally {
+                    setVisible(false);
+                }
             }
         });
     }

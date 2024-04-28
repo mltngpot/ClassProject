@@ -131,7 +131,6 @@ public class SchedulePanel extends JPanel {
                 }
                 slots[x - 1][y - 1] = slot;
                 // Day calculation
-                int startTime = y - 1;  // Start time calculation
                 slot.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {  
@@ -162,7 +161,8 @@ public class SchedulePanel extends JPanel {
         });
     }
 
-    private void showEditDialog(int scheduleId) {                
+    private void showEditDialog(int scheduleId) {    
+        try{     
         Schedule schedule = DataRepository.GetSchedule(scheduleId);
         if(schedule.Owner != header.getUser().Id)
             return;
@@ -172,10 +172,11 @@ public class SchedulePanel extends JPanel {
             @Override
             public void componentHidden(ComponentEvent arg0) {
                 doUpdateSchedule(dialog);
-                InitializeButtons();
-                updateCalendarDisplay();
             }
-        });
+        });} finally{
+            InitializeButtons();
+            updateCalendarDisplay();
+        }
     }
 
     private void doAddSchedule(CreateDialog dialog) {
@@ -193,6 +194,7 @@ public class SchedulePanel extends JPanel {
     }
 
     private void doUpdateSchedule(EditDialog dialog) {
+        try {
         Schedule schedule = dialog.getSchedule();
         try {
             DataRepository.UpdateSchedule(schedule);
