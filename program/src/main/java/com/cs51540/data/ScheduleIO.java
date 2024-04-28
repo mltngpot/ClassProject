@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
+import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.time.LocalDate;
+
 
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
@@ -19,10 +22,10 @@ public class ScheduleIO {
     private final String dataDirectory;
     private final IDataRepository dataRepository;
 
-    public ScheduleIO(IDataRepository dataRepository, String dataDirectory) {
+    public ScheduleIO(IDataRepository dataRepository) {
         this.dataRepository = dataRepository;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
-        this.dataDirectory = dataDirectory;
+        dataDirectory = FileSystems.getDefault().getPath("").toAbsolutePath().toString();
     }
 
     public void saveUsers() {
