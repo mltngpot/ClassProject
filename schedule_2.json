@@ -5,11 +5,12 @@
     "MeetingType": "In person",
     "Location": "",
     "Attendees": [
+      1,
       2
     ],
-    "Title": "Henry to Jacob",
-    "Start": "2024-04-29 10:00:00",
-    "End": "2024-04-29 12:00:00"
+    "Title": "Kenneth to Henry",
+    "Start": "2024-04-28 08:00:00",
+    "End": "2024-04-28 10:00:00"
   },
   {
     "Id": 3,

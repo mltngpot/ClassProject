@@ -5,27 +5,31 @@
 
 package com.cs51540.dialogs;
 
-import javax.swing.*;
-
-import com.cs51540.interfaces.IDataRepository;
-import com.cs51540.models.Schedule;
-
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import com.cs51540.models.Schedule;
-//import com.cs51540.data.TestDataRepository;
-import com.cs51540.interfaces.IDataRepository;
-import com.cs51540.models.User;
-
 import java.time.DayOfWeek;
-//import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
+import com.cs51540.interfaces.IDataRepository;
+import com.cs51540.models.Schedule;
+import com.cs51540.models.User;
 
 public class EditDialog extends JFrame {
     private Schedule schedule;
@@ -333,18 +337,8 @@ public class EditDialog extends JFrame {
                 userIDSelected.add(dict.get(x));
             }
             
-            //TODO
-            //create object
-            //Correct one
-            schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
-           // schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
-            //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
-            //System.out.println(getSchedule());
-            
-            //TODO
-            //Action Handler to create event properly
-            // call Action Handler
-            //actionPerformed(null);
+                schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
+
                 JOptionPane.showMessageDialog(saveButton, "Changes Saved");
             }
         });

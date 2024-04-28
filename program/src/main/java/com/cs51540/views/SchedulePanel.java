@@ -137,7 +137,6 @@ public class SchedulePanel extends JPanel {
                         if (header.getUser().Id == -1){
 
                         } else if(slot.getId() > 0){
-
                             showEditDialog(slot.getId());
                             InitializeButtons();
                             updateCalendarDisplay();
@@ -151,46 +150,6 @@ public class SchedulePanel extends JPanel {
         }
     }
 
-    private void replaceButtons(int slotId){
-        Schedule schedule = DataRepository.GetSchedule(slotId);
-        try {
-        int dayIndex = getDayIndex(schedule.Start);
-        int slotIndex = getSlotIndex(schedule.Start);
-        int endIndex = getSlotIndex(schedule.End);
-        Border blackline = BorderFactory.createLineBorder(Color.black);
-        gbc.gridheight = 1;
-        gbc.gridx = dayIndex + 1;
-        
-        for (int start = slotIndex; start < endIndex; start++){
-            slots[dayIndex][start].setVisible(false);
-        }
-        
-        for (int start = slotIndex; start < endIndex; start++){
-            Slot slot = new Slot();
-            gbc.gridy = start + 1;
-            slot.setBorder(blackline);
-            slot.setBackground(Color.WHITE);
-            slot.setOpaque(true);
-            gbl.setConstraints(slot, gbc);
-            add(slot,gbc);
-            slot.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {  
-                    System.out.println(slot.getId());
-                    if(slot.getId() > 0){
-                        showEditDialog(slot.getId());
-                    } else {
-                        showCreateDialog();
-                    }
-                }
-            });
-            }
-        }catch (Exception e) {
-            // TODO: handle exception
-        }
-}
-
-
     private void showCreateDialog(){
         CreateDialog dialog = new CreateDialog(DataRepository, header.getUser().Name);
         dialog.setVisible(true);
@@ -203,6 +162,9 @@ public class SchedulePanel extends JPanel {
     }
 
     private void showEditDialog(int scheduleId) {                
+        Schedule schedule = DataRepository.GetSchedule(scheduleId);
+        if(schedule.Owner != header.getUser().Id)
+            return;
         EditDialog dialog = new EditDialog(DataRepository, scheduleId);
         dialog.setVisible(true);
         dialog.addComponentListener(new ComponentAdapter() {
