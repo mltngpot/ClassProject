@@ -34,14 +34,13 @@ public class CreateDialog extends JFrame{
     private Schedule schedule;
     private IDataRepository DataRepository;
     private final User[] users;
+    private User CurrentUser;
 
     public CreateDialog(IDataRepository DataRepository)
     {
         super();
         setTitle("Create Event");
         setSize(400, 400);
-        // Variables that are used throughout the class
-        // Putting them here so it's easier to change their values
         String[] onlineChoices = {"Online", "In person"};
         String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
         
@@ -68,7 +67,6 @@ public class CreateDialog extends JFrame{
             revDict.put(user.Id, user.Name);    
         }
         
-        
         // Create Main Panel with fields
         JPanel mainPanel = new JPanel();
         
@@ -78,10 +76,10 @@ public class CreateDialog extends JFrame{
         JTextField eventNameInput = new JTextField(16);
         
         // Who is the host of the event
-        // The reason this is just a label is beacuse I assume when editing (cont.)
-        // A event, you won't be editing who is the host otherwise this could be a JComboBox
         JLabel hostFieldLabel = new JLabel("Host: ");
-        JLabel hostLabel = new JLabel("Insert Host Name Here");
+        CurrentUser = DataRepository.GetUser(0);
+        JLabel hostLabel = new JLabel();
+        hostLabel.setText(CurrentUser.Name);
         
         // Choice of if event is online or in person
         JLabel onlineChoiceLabel = new JLabel("Online or In person: ");
@@ -99,20 +97,14 @@ public class CreateDialog extends JFrame{
         
         // Start Hour
         JLabel startHourLabel = new JLabel("Start Hour: ");
-        JSpinner startHourChoice = new JSpinner(new SpinnerNumberModel(1, 1, 24, 1));
+        JSpinner startHourChoice = new JSpinner(new SpinnerNumberModel(8, 8, 20, 1));
         startHourChoice.setBounds(70, 130, 50, 40);
-        //Added this so we don't have to do data validation on time
-        //Remove line if we want users to be able to type the number
-        //You can hold the spinner arrows so its not that bad
         ((JSpinner.DefaultEditor)startHourChoice.getEditor()).getTextField().setEditable(false);
         
         // Start Minute
         JLabel startMinuteLabel = new JLabel("Start Minute: ");
         JSpinner startMinuteChoice = new JSpinner(new SpinnerNumberModel(0, 0, 30, 30));
         startMinuteChoice.setBounds(70, 130, 50, 40);
-        //Added this so we don't have to do data validation on time
-        //Remove line if we want users to be able to type the number
-        //You can hold the spinner arrows so its not that bad
         ((JSpinner.DefaultEditor)startMinuteChoice.getEditor()).getTextField().setEditable(false);
         
         // End Day
@@ -122,20 +114,14 @@ public class CreateDialog extends JFrame{
         
         // End Hour
         JLabel endHourLabel = new JLabel("End Hour: ");
-        JSpinner endHourChoice = new JSpinner(new SpinnerNumberModel(1, 1, 24, 1));
+        JSpinner endHourChoice = new JSpinner(new SpinnerNumberModel(8, 8, 20, 1));
         endHourChoice.setBounds(70, 130, 50, 40);
-        //Added this so we don't have to do data validation on time
-        //Remove line if we want users to be able to type the number
-        //You can hold the spinner arrows so its not that bad
         ((JSpinner.DefaultEditor)endHourChoice.getEditor()).getTextField().setEditable(false);
         
         // End Minute
         JLabel endMinuteLabel = new JLabel("End Minute: ");
         JSpinner endMinuteChoice = new JSpinner(new SpinnerNumberModel(0, 0, 30, 30));
         endMinuteChoice.setBounds(70, 130, 50, 40);
-        //Added this so we don't have to do data validation on time
-        //Remove line if we want users to be able to type the number
-        //You can hold the spinner arrows so its not that bad
         ((JSpinner.DefaultEditor)endMinuteChoice.getEditor()).getTextField().setEditable(false);
         
         // Users Attending
@@ -201,7 +187,7 @@ public class CreateDialog extends JFrame{
         createButton.addActionListener((ActionEvent e) -> {
             //TODO
             //set proper IDs
-            int eventId = 1;
+            int eventId = 0;
             int ownerId = 1;
             //basics
             String Title = eventNameInput.getText();
@@ -234,19 +220,10 @@ public class CreateDialog extends JFrame{
             {
                 userIDSelected.add(dict.get(x));
             }
-            
-            //TODO
-            //create object
-            //Correct one
+
             schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
-           // schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
-            //schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End);
-            //System.out.println(getSchedule());
-            
-            //TODO
-            //Action Handler to create event properly
-            // call Action Handler
-            //actionPerformed(null);
+            //if you use dispose it breaks
+            setVisible(false);
         });
     }
 
