@@ -11,7 +11,7 @@ import com.cs51540.models.User;
 
 public class Header extends JPanel {
 
-    JComboBox<User> cb;
+    public JComboBox<User> cb;
     private IDataRepository DataRepository;
     private JLabel currentUser;
 

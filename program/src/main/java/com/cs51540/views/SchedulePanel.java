@@ -63,8 +63,8 @@ public class SchedulePanel extends JPanel {
         gbc.insets = new Insets(1, 1, 1, 1);
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
-        JButton update = new JButton("Update");
-        update.addActionListener(new ActionListener() {
+        
+        header.cb.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {  
                 InitializeButtons();
@@ -72,9 +72,6 @@ public class SchedulePanel extends JPanel {
                 header.changeUserLabel();
             }
         });
-        gbc.gridx = 0; // Place the button in the first column
-        gbc.gridy = 0; // Place the button in the first row
-        add(update,gbc);
     
         try {
             // Time labels setup
@@ -139,8 +136,7 @@ public class SchedulePanel extends JPanel {
                     public void actionPerformed(ActionEvent e) {  
                         if (header.getUser().Id == -1){
 
-                        } else {
-                        if(slot.getId() > 0){
+                        } else if(slot.getId() > 0){
 
                             showEditDialog(slot.getId());
                             InitializeButtons();
@@ -150,7 +146,6 @@ public class SchedulePanel extends JPanel {
                             showCreateDialog();
                         }
                     }
-                }
                 });
             }
         }
