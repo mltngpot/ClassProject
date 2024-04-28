@@ -1,5 +1,17 @@
 [
   {
+    "Id": 2,
+    "Owner": 1,
+    "MeetingType": "In person",
+    "Location": "",
+    "Attendees": [
+      0
+    ],
+    "Title": "Travis to Kenneth",
+    "Start": "2024-04-29 14:00:00",
+    "End": "2024-04-29 16:00:00"
+  },
+  {
     "Id": 4,
     "Owner": 3,
     "MeetingType": "In person",

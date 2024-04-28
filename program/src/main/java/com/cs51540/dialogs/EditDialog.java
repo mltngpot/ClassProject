@@ -303,8 +303,8 @@ public class EditDialog extends JFrame {
             {
             //TODO
             //set proper IDs
-            int eventId = 2;
-            int ownerId = 1;
+            int eventId = schedule.Id;
+            int ownerId = schedule.Owner;
             //basics
             String Title = eventNameInput.getText();
             String MeetingType = onlineChoiceInput.getSelectedItem().toString();
@@ -340,6 +340,8 @@ public class EditDialog extends JFrame {
                 schedule = new Schedule(eventId,ownerId,MeetingType,Location,Title,Start,End,userIDSelected);
 
                 JOptionPane.showMessageDialog(saveButton, "Changes Saved");
+                
+                setVisible(false);
             }
         });
         

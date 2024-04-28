@@ -13,6 +13,7 @@ import com.cs51540.models.User;
 public class DataRepository implements IDataRepository {
     private Map<Integer, User> usersMap;
     private Map<Integer, Schedule> schedulesMap;
+    private Integer currentId = 0;
     
     public DataRepository() {
         usersMap = new HashMap<>();
@@ -36,6 +37,9 @@ public class DataRepository implements IDataRepository {
             if(schedulesMap.containsKey(schedules[i].Id))
                 continue;
             schedulesMap.put(schedules[i].Id, schedules[i]);
+            if(schedules[i].Id > currentId) {
+                currentId = schedules[i].Id;
+            }
         }
 
     }
@@ -52,7 +56,7 @@ public class DataRepository implements IDataRepository {
 
     @Override
     public Integer AddSchedule(Schedule schedule) {
-        int scheduleId = schedulesMap.size() + 1; // Generate a new ID
+        int scheduleId = ++currentId; // Generate a new ID
         schedule.setId(scheduleId);
         schedulesMap.put(scheduleId, schedule);
         return scheduleId;
@@ -61,6 +65,7 @@ public class DataRepository implements IDataRepository {
     @Override
     public void UpdateSchedule(Schedule schedule) {
         if (schedulesMap.containsKey(schedule.Id)) {
+            schedulesMap.remove(schedule.Id);
             schedulesMap.put(schedule.Id, schedule);
         } else {
             throw new IllegalArgumentException("Schedule not found");
