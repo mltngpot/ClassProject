@@ -141,6 +141,7 @@ public class SchedulePanel extends JPanel {
 
                         } else {
                         if(slot.getId() > 0){
+
                             showEditDialog(slot.getId());
                             InitializeButtons();
                             updateCalendarDisplay();
