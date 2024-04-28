@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 0,
+    "DisplayColor": {
+      "red": 0,
+      "green": 0,
+      "blue": 255,
+      "alpha": 255
+    },
+    "Name": "Kenneth Gurnsey"
+  },
+  {
+    "Id": 1,
+    "DisplayColor": {
+      "red": 0,
+      "green": 255,
+      "blue": 0,
+      "alpha": 255
+    },
+    "Name": "Henry Kroll"
+  },
+  {
+    "Id": 2,
+    "DisplayColor": {
+      "red": 255,
+      "green": 0,
+      "blue": 0,
+      "alpha": 255
+    },
+    "Name": "Jacob DeMuth"
+  },
+  {
+    "Id": 3,
+    "DisplayColor": {
+      "red": 255,
+      "green": 255,
+      "blue": 0,
+      "alpha": 255
+    },
+    "Name": "Travis Thurn"
+  }
+]
