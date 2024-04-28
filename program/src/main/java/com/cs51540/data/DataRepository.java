@@ -22,6 +22,11 @@ public class DataRepository implements IDataRepository {
         usersMap.put(1, new User(1, Color.green, "Henry Kroll"));
         usersMap.put(2, new User(2, Color.red, "Jacob DeMuth"));
         usersMap.put(3, new User(3, Color.yellow, "Travis Thurn"));
+
+        ScheduleIO sio = new ScheduleIO(this);
+        sio.saveUsers();
+        // sio.loadUsers();
+        // sio.loadSchedules();
     }
 
     @Override
@@ -81,6 +86,8 @@ public Schedule[] GetWeekSchedule(LocalDate weekOfDate) {
     @Override
     public void Save() {
         // Implementation of saving data to a persistent storage (e.g., database, file)
+        ScheduleIO sio = new ScheduleIO(this);
+        sio.saveSchedules();
         System.out.println("Saving data to persistent storage...");
     }
 

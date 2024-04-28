@@ -31,7 +31,6 @@ import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.Slot;
 import com.cs51540.models.User;
-import com.cs51540.data.ScheduleIO;
 
 public class SchedulePanel extends JPanel {
     private final EventListener eventListener;
