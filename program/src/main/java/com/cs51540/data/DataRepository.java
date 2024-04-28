@@ -19,8 +19,25 @@ public class DataRepository implements IDataRepository {
         schedulesMap = new HashMap<>();
 
         ScheduleIO sio = new ScheduleIO(this);
-        sio.loadUsers();
-        sio.loadSchedules();
+        loadUsers(sio);
+        loadSchedules(sio);
+    }
+
+    private void loadUsers(ScheduleIO sio) {
+        User[] users = sio.loadUsers();
+        for(int i = 0; i < users.length; i++) {
+            usersMap.put(users[i].Id, users[i]);
+        }
+    }
+
+    private void loadSchedules(ScheduleIO sio) {
+        Schedule[] schedules = sio.loadSchedules();
+        for(int i = 0; i < schedules.length; i++) {
+            if(schedulesMap.containsKey(schedules[i].Id))
+                continue;
+            schedulesMap.put(schedules[i].Id, schedules[i]);
+        }
+
     }
 
     @Override

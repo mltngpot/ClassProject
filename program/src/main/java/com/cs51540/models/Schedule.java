@@ -16,10 +16,13 @@ public class Schedule {
     public LocalDateTime End;
     public String Description;
     
+    public Schedule(Integer Owner, String MeetingType, String Location, String Title, LocalDateTime Start, LocalDateTime End, ArrayList<Integer> Attendees) 
+    {
+        this(-1, Owner, MeetingType, Location, Title, Start, End, Attendees);
+    }
+
+    public Schedule() {}
    public Schedule(Integer Id, Integer Owner, String MeetingType, String Location, String Title, LocalDateTime Start, LocalDateTime End, ArrayList<Integer> Attendees) {
-        if(Id > maxId) {
-            maxId = Id + 1;
-        }
         this.Id = Id;
         this.Owner = Owner;
         this.MeetingType = MeetingType;
@@ -32,9 +35,6 @@ public class Schedule {
     }
     
     public Schedule(Integer Id, Integer Owner, String MeetingType, String Location, String Title, LocalDateTime Start, LocalDateTime End) {
-        if(Id > maxId) {
-            maxId = Id + 1;
-        }
         this.Id = Id;
         this.Owner = Owner;
         this.MeetingType = MeetingType;
@@ -45,17 +45,11 @@ public class Schedule {
         System.out.println(Id + Owner + MeetingType + Location + Title + Start + End);
     }
 
-    /*public Schedule(Integer Owner, String Title, LocalDateTime Start, LocalDateTime End) {
-        this.Id = maxId++;
-        this.Owner = Owner;
-        this.MeetingType = MeetingType;
-        this.Location = Location;
-        this.Title = Title;
-        this.Start = Start;
-        this.End = End;
-        this.Attendees = new ArrayList<>();
-    }*/
-    
+    public void setId(Integer newId)
+    {
+        Id = newId;
+    }
+
     public void AddAttendee(Integer userId) {
         Attendees.add(userId);
     }
