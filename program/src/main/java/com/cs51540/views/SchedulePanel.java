@@ -60,13 +60,8 @@ public class SchedulePanel extends JPanel {
         gbc.insets = new Insets(1, 1, 1, 1);
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
-    
-        // Create and add the save button
-        JButton saveButton = new JButton("Save");
-
         gbc.gridx = 0; // Place the button in the first column
         gbc.gridy = 0; // Place the button in the first row
-        add(saveButton, gbc);
     
         try {
             // Time labels setup

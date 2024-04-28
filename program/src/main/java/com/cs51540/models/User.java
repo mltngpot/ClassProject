@@ -12,5 +12,8 @@ public class User {
         this.DisplayColor = DisplayColor;
         this.Name = Name;
     }
-
+    @Override
+    public String toString(){
+        return Name;
+    }
 }
