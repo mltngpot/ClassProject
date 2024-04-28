@@ -7,10 +7,8 @@ import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.nio.file.FileSystems;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.awt.Color;
+import java.util.ArrayList;
 
 import com.cs51540.data.TypeAdapters.ColorAdapter;
 import com.cs51540.data.TypeAdapters.DataTimeAdapter;
@@ -84,7 +82,7 @@ public class ScheduleIO {
             System.err.println(ex.getMessage());
         }
 
-        return (User[])users.toArray();
+        return users.toArray(new User[0]);
     }
 
     public Schedule[] loadSchedules() {
@@ -104,6 +102,6 @@ public class ScheduleIO {
                 System.err.println(ex.getMessage());
             }
         }
-        return (Schedule[]) schedules.toArray();
+        return schedules.toArray(new Schedule[0]);
     }
 }
