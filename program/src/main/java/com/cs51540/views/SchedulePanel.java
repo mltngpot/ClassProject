@@ -27,30 +27,29 @@ import javax.swing.JButton;
 
 import com.cs51540.dialogs.CreateDialog;
 import com.cs51540.dialogs.EditDialog;
-//import com.cs51540.interfaces.DataRepository;
+import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.Slot;
 import com.cs51540.models.User;
-import com.cs51540.data.DataRepository;
-import com.cs51540.data.ScheduleIO;;
+import com.cs51540.data.ScheduleIO;
 
 public class SchedulePanel extends JPanel {
-    ScheduleIO scheduleio = new ScheduleIO("C:\\Users\\Henry\\Documents\\College\\Object-Oriented Design, Analysis And Programming\\Project\\ClassProject\\scheduledata");//TODO This will have to be changed to a relative path
+    ScheduleIO scheduleio = new ScheduleIO("schedule.data");//TODO This will have to be changed to a relative path
     private final EventListener eventListener;
     private final Slot[][] slots = new Slot[7][25];
     GridBagLayout gbl = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
     private User CurrentUser;
-    private  DataRepository DataRepository;
+    private IDataRepository DataRepository;
 
-    public SchedulePanel(DataRepository DataRepository) {
+    public SchedulePanel(IDataRepository DataRepository) {
         this.eventListener = new EventListener();
         this.DataRepository = DataRepository;
         CurrentUser = DataRepository.GetUser(0); //TODO Hard coded to 0, need to be able to change
         setupSchedule(DataRepository);
     }
 
-    private void setupSchedule(DataRepository dataRepository) {
+    private void setupSchedule(IDataRepository dataRepository) {
         setLayout(gbl);
         gbc.gridx = 0;
         gbc.gridy = 0;
