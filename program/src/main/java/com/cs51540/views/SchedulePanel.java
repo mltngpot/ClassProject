@@ -34,7 +34,6 @@ import com.cs51540.models.User;
 import com.cs51540.data.ScheduleIO;
 
 public class SchedulePanel extends JPanel {
-    ScheduleIO scheduleio = new ScheduleIO("schedule.data");//TODO This will have to be changed to a relative path
     private final EventListener eventListener;
     private final Slot[][] slots = new Slot[7][25];
     GridBagLayout gbl = new GridBagLayout();
@@ -62,23 +61,8 @@ public class SchedulePanel extends JPanel {
         gbc.insets = new Insets(1, 1, 1, 1);
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
-    
-        // Create and add the save button
-        JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    scheduleio.saveSchedule(dataRepository.GetSchedule(CurrentUser.Id));
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-            }
-        });
         gbc.gridx = 0; // Place the button in the first column
         gbc.gridy = 0; // Place the button in the first row
-        add(saveButton, gbc);
     
         try {
             // Time labels setup
