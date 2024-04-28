@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.xml.crypto.Data;
 import javax.swing.JButton;
 
 import com.cs51540.dialogs.CreateDialog;
@@ -39,10 +40,12 @@ public class SchedulePanel extends JPanel {
     GridBagConstraints gbc = new GridBagConstraints();
     private User CurrentUser;
     private IDataRepository DataRepository;
+    private Header header;
 
-    public SchedulePanel(IDataRepository DataRepository) {
+    public SchedulePanel(IDataRepository DataRepository, Header header) {
         this.eventListener = new EventListener();
         this.DataRepository = DataRepository;
+        this.header = header;
         CurrentUser = DataRepository.GetUser(0); //TODO Hard coded to 0, need to be able to change
         setupSchedule(DataRepository);
     }
@@ -60,8 +63,18 @@ public class SchedulePanel extends JPanel {
         gbc.insets = new Insets(1, 1, 1, 1);
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
+        JButton update = new JButton("Update");
+        update.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {  
+                InitializeButtons();
+                updateCalendarDisplay();
+                header.changeUserLabel();
+            }
+        });
         gbc.gridx = 0; // Place the button in the first column
         gbc.gridy = 0; // Place the button in the first row
+        add(update,gbc);
     
         try {
             // Time labels setup
@@ -110,6 +123,14 @@ public class SchedulePanel extends JPanel {
                 slot.setBackground(Color.WHITE);
                 slot.setOpaque(true);
                 add(slot, gbc);
+                if (slots[x-1][y-1] != null){
+                    JPanel parent = (JPanel)slots[x-1][y-1].getParent();
+                    parent.remove(slots[x - 1][y - 1]);
+                    parent.revalidate();
+                    parent.repaint();
+                    slots[x - 1][y - 1] = null;
+
+                }
                 slots[x - 1][y - 1] = slot;
                 // Day calculation
                 int startTime = y - 1;  // Start time calculation
@@ -194,6 +215,8 @@ public class SchedulePanel extends JPanel {
 
     private void doAddSchedule(CreateDialog dialog) {
         Schedule schedule = dialog.getSchedule();
+        User user = header.getUser();
+        schedule.Owner = user.Id;
         DataRepository.AddSchedule(schedule);
         dialog.dispose();
         updateCalendarDisplay();
@@ -207,7 +230,8 @@ public class SchedulePanel extends JPanel {
     }
 
     private void updateCalendarDisplay() {
-        Schedule[] schedules = DataRepository.GetWeekSchedule(LocalDate.now());
+      /* Schedule[] schedules = DataRepository.GetWeekSchedule(LocalDate.now());
+        
         for(Schedule schedule : schedules){
             try {
             int dayIndex = getDayIndex(schedule.Start);
@@ -233,8 +257,38 @@ public class SchedulePanel extends JPanel {
                 System.err.println("Schedule Id: " + schedule.Id + "Handling Error");
                 System.err.println(e.getMessage());
             }
-        }      
+        }
+            */
 
+            User user = header.getUser();
+            System.out.println(user.Id);
+            Schedule[] schedules = DataRepository.GetUserSchedule(user.Id);
+            for(Schedule schedule : schedules){
+                try {
+                int dayIndex = getDayIndex(schedule.Start);
+                int slotIndex = getSlotIndex(schedule.Start);
+                int endIndex = getSlotIndex(schedule.End);
+                User owner = DataRepository.GetUser(schedule.Owner);
+                Slot slot = slots[dayIndex][slotIndex];
+                slot.setBackground(owner.DisplayColor);
+                slot.setText(schedule.Title);
+                slot.setId(schedule.Id);
+                gbc.gridheight = endIndex - slotIndex;
+                gbc.gridx = dayIndex + 1;
+                gbc.gridy = slotIndex + 1;
+                gbl.setConstraints(slot, gbc);
+                if (endIndex - slotIndex != 1){
+                    for (int x = 1; x <= (endIndex - slotIndex - 1); x++){
+                        slots[dayIndex][slotIndex+x].setVisible(false);
+                    }
+                }
+                }
+                catch (Exception e)
+                {
+                    System.err.println("Schedule Id: " + schedule.Id + "Handling Error");
+                    System.err.println(e.getMessage());
+                }
+        }      
 	}
 
     private int getDayIndex(LocalDateTime date)

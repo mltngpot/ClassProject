@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
@@ -18,6 +20,12 @@ public class DataRepository implements IDataRepository {
         usersMap = new HashMap<>();
         schedulesMap = new HashMap<>();
 
+        //kenny testing Stuff
+        ArrayList<Integer> a = new ArrayList<Integer>();
+        a.add(1);
+        LocalDate day = LocalDate.now();
+        Schedule breakfast = new Schedule(0, 1, "string", "string", "Breakfast", day.atTime(8, 00), day.atTime(8, 30),a);
+        AddSchedule(breakfast);
         ScheduleIO sio = new ScheduleIO(this);
         loadUsers(sio);
         loadSchedules(sio);
@@ -75,7 +83,7 @@ public class DataRepository implements IDataRepository {
     public Schedule[] GetUserSchedule(Integer userId) {
         List<Schedule> userSchedules = new ArrayList<>();
         for (Schedule schedule : schedulesMap.values()) {
-            if (schedule.Owner == userId) {
+            if ((schedule.Owner == userId) || (schedule.Attendees.contains(userId))) {
                 userSchedules.add(schedule);
             }
         }

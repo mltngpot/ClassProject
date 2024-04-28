@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
@@ -13,6 +16,8 @@ public class TestDataRepository implements IDataRepository {
 
     private final User[] Users;
     private final ArrayList<Schedule> Schedules;
+    private Map<Integer, Schedule> schedulesMap;
+
 
     public TestDataRepository() {
         Users = new User[4];
@@ -42,14 +47,16 @@ public class TestDataRepository implements IDataRepository {
         return schedules;
     }
 
+
+
     private ArrayList<Schedule> getMeals(LocalDate day) {
-        Schedule breakfast = new Schedule(0, 0, "string", "string", "Breakfast", day.atTime(8, 00), day.atTime(8, 30) );
-        Schedule secondBreakfast = new Schedule(0, 0, "string", "string", "Second Breakfast", day.atTime(9, 00), day.atTime(9, 30) );
-        Schedule elevensies = new Schedule(0, 0, "string", "string", "Elevenses", day.atTime(11, 00), day.atTime(12, 45) );
-        Schedule luncheon = new Schedule(0, 0, "string", "string", "Luncheon", day.atTime(13, 00), day.atTime(13, 30) );
-        Schedule afternoonTea = new Schedule(0, 0, "string", "string", "Afternoon Tea", day.atTime(15, 00), day.atTime(15, 30) );
-        Schedule dinner = new Schedule(0, 0,  "string", "string","Dinner", day.atTime(18, 00), day.atTime(19, 00) );
-        Schedule supper = new Schedule(0, 0, "string", "string", "Supper", day.atTime(21, 00), day.atTime(22, 00) );
+        Schedule breakfast = new Schedule(0, 1, "string", "string", "Breakfast", day.atTime(8, 00), day.atTime(8, 30));
+        Schedule secondBreakfast = new Schedule(0, 1, "string", "string", "Second Breakfast", day.atTime(9, 00), day.atTime(9, 30) );
+        Schedule elevensies = new Schedule(1, 1, "string", "string", "Elevenses", day.atTime(11, 00), day.atTime(12, 45) );
+        Schedule luncheon = new Schedule(1, 1, "string", "string", "Luncheon", day.atTime(13, 00), day.atTime(13, 30) );
+        Schedule afternoonTea = new Schedule(2, 1, "string", "string", "Afternoon Tea", day.atTime(15, 00), day.atTime(15, 30) );
+        Schedule dinner = new Schedule(2, 1,  "string", "string","Dinner", day.atTime(18, 00), day.atTime(19, 00) );
+        Schedule supper = new Schedule(3, 1, "string", "string", "Supper", day.atTime(21, 00), day.atTime(22, 00) );
 
     //    breakfast.AddAddendee(1);
     //    breakfast.AddAddendee(2);
@@ -99,21 +106,13 @@ public class TestDataRepository implements IDataRepository {
  
     @Override
     public Schedule[] GetUserSchedule(Integer userId) {
-        ArrayList<Schedule> usersSchedule = new ArrayList<>();
-        for (Schedule schedule : Schedules) {
-            if(schedule.Owner.equals(userId)) {
-                usersSchedule.add(schedule);
-                continue;
-            }
-            if(schedule.Attendees.contains(userId))
-            {
-                usersSchedule.add(schedule);
+        List<Schedule> userSchedules = new ArrayList<>();
+        for (Schedule schedule : schedulesMap.values()) {
+            if ((schedule.Owner == userId) || (schedule.Attendees.contains(userId))) {
+                userSchedules.add(schedule);
             }
         }
-
-        Schedule[] tempArray = new Schedule[usersSchedule.size()];
-        usersSchedule.toArray(tempArray);
-        return tempArray;
+        return userSchedules.toArray(new Schedule[0]);
     }
 
     @Override
