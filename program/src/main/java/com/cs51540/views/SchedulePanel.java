@@ -160,7 +160,8 @@ public class SchedulePanel extends JPanel {
         });
     }
 
-    private void showEditDialog(int scheduleId) {                
+    private void showEditDialog(int scheduleId) {    
+        try{     
         Schedule schedule = DataRepository.GetSchedule(scheduleId);
         if(schedule.Owner != header.getUser().Id)
             return;
@@ -171,7 +172,10 @@ public class SchedulePanel extends JPanel {
             public void componentHidden(ComponentEvent arg0) {
                 doUpdateSchedule(dialog);
             }
-        });
+        });} finally{
+            InitializeButtons();
+            updateCalendarDisplay();
+        }
     }
 
     private void doAddSchedule(CreateDialog dialog) {
@@ -188,9 +192,8 @@ public class SchedulePanel extends JPanel {
         try {
         Schedule schedule = dialog.getSchedule();
         DataRepository.UpdateSchedule(schedule);
-        
         } finally {
-            dialog.dispose();
+            dialog.setVisible(false);
             InitializeButtons();
             updateCalendarDisplay();
         }

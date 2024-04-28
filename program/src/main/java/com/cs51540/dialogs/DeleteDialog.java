@@ -42,7 +42,7 @@ public class DeleteDialog extends JFrame {
                 int eventId = scheduleId;
                 DataRepository.DeleteSchedule(eventId);
                 JOptionPane.showMessageDialog(yesButton, "Event Deleted!");
-                dispose();
+                setVisible(false);
             }
         });
         
