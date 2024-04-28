@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
@@ -18,11 +20,17 @@ public class DataRepository implements IDataRepository {
     public DataRepository() {
         usersMap = new HashMap<>();
         schedulesMap = new HashMap<>();
-        usersMap.put(0, new User(0, Color.blue, "Kenneth Gurnsey"));
+        usersMap.put(0, new User(0, Color.blue, "Kenneth Guernsey"));
         usersMap.put(1, new User(1, Color.green, "Henry Kroll"));
         usersMap.put(2, new User(2, Color.red, "Jacob DeMuth"));
         usersMap.put(3, new User(3, Color.yellow, "Travis Thurn"));
 
+        //kenny testing Stuff
+        ArrayList<Integer> a = new ArrayList<Integer>();
+        a.add(1);
+        LocalDate day = LocalDate.now();
+        Schedule breakfast = new Schedule(0, 1, "string", "string", "Breakfast", day.atTime(8, 00), day.atTime(8, 30),a);
+        AddSchedule(breakfast);
         ScheduleIO sio = new ScheduleIO(this);
         sio.saveUsers();
         // sio.loadUsers();
@@ -64,7 +72,7 @@ public class DataRepository implements IDataRepository {
     public Schedule[] GetUserSchedule(Integer userId) {
         List<Schedule> userSchedules = new ArrayList<>();
         for (Schedule schedule : schedulesMap.values()) {
-            if (schedule.Owner == userId) {
+            if ((schedule.Owner == userId) || (schedule.Attendees.contains(userId))) {
                 userSchedules.add(schedule);
             }
         }
