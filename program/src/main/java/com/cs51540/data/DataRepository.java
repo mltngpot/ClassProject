@@ -1,6 +1,5 @@
 package com.cs51540.data;
 
-import java.awt.Color;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,15 +17,10 @@ public class DataRepository implements IDataRepository {
     public DataRepository() {
         usersMap = new HashMap<>();
         schedulesMap = new HashMap<>();
-        usersMap.put(0, new User(0, Color.blue, "Kenneth Gurnsey"));
-        usersMap.put(1, new User(1, Color.green, "Henry Kroll"));
-        usersMap.put(2, new User(2, Color.red, "Jacob DeMuth"));
-        usersMap.put(3, new User(3, Color.yellow, "Travis Thurn"));
 
         ScheduleIO sio = new ScheduleIO(this);
-        sio.saveUsers();
-        // sio.loadUsers();
-        // sio.loadSchedules();
+        sio.loadUsers();
+        sio.loadSchedules();
     }
 
     @Override

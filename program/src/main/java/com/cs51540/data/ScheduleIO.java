@@ -1,15 +1,13 @@
 package com.cs51540.data;
 
+import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.time.LocalDate;
-import java.awt.Color;
 
 import com.cs51540.data.TypeAdapters.ColorAdapter;
 import com.cs51540.interfaces.IDataRepository;
@@ -17,7 +15,6 @@ import com.cs51540.models.Schedule;
 import com.cs51540.models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 
 public class ScheduleIO {
