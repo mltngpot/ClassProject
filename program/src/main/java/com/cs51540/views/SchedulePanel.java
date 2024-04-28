@@ -28,6 +28,7 @@ import javax.swing.JButton;
 
 import com.cs51540.dialogs.CreateDialog;
 import com.cs51540.dialogs.EditDialog;
+import com.cs51540.dialogs.ErrorDialog;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.Schedule;
 import com.cs51540.models.Slot;
@@ -182,20 +183,26 @@ public class SchedulePanel extends JPanel {
         Schedule schedule = dialog.getSchedule();
         User user = header.getUser();
         schedule.Owner = user.Id;
-        DataRepository.AddSchedule(schedule);
-        dialog.dispose();
-        InitializeButtons();
-        updateCalendarDisplay();
+        try {
+            DataRepository.AddSchedule(schedule);
+            dialog.dispose();
+            updateCalendarDisplay();
+        } catch (Exception e) {
+            dialog.setVisible(true);
+            new ErrorDialog().setVisible(true);
+        }
     }
 
     private void doUpdateSchedule(EditDialog dialog) {
         try {
         Schedule schedule = dialog.getSchedule();
-        DataRepository.UpdateSchedule(schedule);
-        } finally {
-            dialog.setVisible(false);
-            InitializeButtons();
+        try {
+            DataRepository.UpdateSchedule(schedule);
+            dialog.dispose();
             updateCalendarDisplay();
+        } catch (Exception e) {
+            dialog.setVisible(true);
+            new ErrorDialog().setVisible(true);            
         }
     }
 
