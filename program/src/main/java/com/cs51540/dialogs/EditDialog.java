@@ -361,8 +361,12 @@ public class EditDialog extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) 
             {
+                try{
                 DeleteDialog delete = new DeleteDialog(DataRepository,scheduleId);
                 delete.setVisible(true);
+                } finally {
+                    setVisible(false);
+                }
             }
         });
     }
