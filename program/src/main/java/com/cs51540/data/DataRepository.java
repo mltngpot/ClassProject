@@ -53,6 +53,7 @@ public class DataRepository implements IDataRepository {
     @Override
     public Integer AddSchedule(Schedule schedule) {
         int scheduleId = schedulesMap.size() + 1; // Generate a new ID
+        schedule.setId(scheduleId);
         schedulesMap.put(scheduleId, schedule);
         return scheduleId;
     }

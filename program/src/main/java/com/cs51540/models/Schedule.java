@@ -53,8 +53,7 @@ public class Schedule {
     public void AddAttendee(Integer userId) {
         Attendees.add(userId);
     }
-            
-
+    
     public void AddDescription(String Description) {
         this.Description = Description;
     }

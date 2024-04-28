@@ -1,0 +1,27 @@
+[
+  {
+    "Id": 1,
+    "Owner": 0,
+    "MeetingType": "In person",
+    "Location": "oeui",
+    "Attendees": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Title": "oui",
+    "Start": "2024-05-04 08:00:00",
+    "End": "2024-05-04 08:00:00"
+  },
+  {
+    "Id": 2,
+    "Owner": 3,
+    "MeetingType": "In person",
+    "Location": "",
+    "Attendees": [],
+    "Title": "",
+    "Start": "2024-04-30 08:00:00",
+    "End": "2024-04-30 08:00:00"
+  }
+]

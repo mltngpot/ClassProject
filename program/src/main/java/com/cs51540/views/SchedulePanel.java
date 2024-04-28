@@ -210,7 +210,6 @@ public class SchedulePanel extends JPanel {
                 doUpdateSchedule(dialog);
             }
         });
-
     }
 
     private void doAddSchedule(CreateDialog dialog) {
