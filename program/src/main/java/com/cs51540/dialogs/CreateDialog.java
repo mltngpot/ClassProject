@@ -36,7 +36,7 @@ public class CreateDialog extends JFrame{
     private final User[] users;
     private User CurrentUser;
 
-    public CreateDialog(IDataRepository DataRepository)
+    public CreateDialog(IDataRepository DataRepository,String Hostname)
     {
         super();
         setTitle("Create Event");
@@ -78,8 +78,7 @@ public class CreateDialog extends JFrame{
         // Who is the host of the event
         JLabel hostFieldLabel = new JLabel("Host: ");
         CurrentUser = DataRepository.GetUser(0);
-        JLabel hostLabel = new JLabel();
-        hostLabel.setText(CurrentUser.Name);
+        JLabel hostLabel = new JLabel(Hostname);
         
         // Choice of if event is online or in person
         JLabel onlineChoiceLabel = new JLabel("Online or In person: ");
