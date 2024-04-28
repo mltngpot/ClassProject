@@ -5,10 +5,17 @@ import java.awt.Container;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import java.io.IOException;
+
+import com.cs51540.data.ScheduleIO;
 import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.User;
 
 public class Footer extends JPanel {
+
 	BorderLayout layout = new BorderLayout();
 	public Footer(IDataRepository DataRepository) {
 		setLayout(layout);
