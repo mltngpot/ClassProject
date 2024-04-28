@@ -9,16 +9,14 @@ import com.cs51540.interfaces.IDataRepository;
 import com.cs51540.models.User;
 
 public class Footer extends JPanel {
-
+	BorderLayout layout = new BorderLayout();
 	public Footer(IDataRepository DataRepository) {
-		this.DataRepository = DataRepository;
-		BorderLayout layout = new BorderLayout();
 		setLayout(layout);
 		JButton button = new JButton("Export Schedule");
 		button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-				ScheduleIO scheduleio = new ScheduleIO(DataRepository,"/Users/kenguerns4/Desktop/Java Course/ClassProject/ClassProject-11");
+				ScheduleIO scheduleio = new ScheduleIO(DataRepository);
 				scheduleio.saveSchedules();
                 }
 			});
