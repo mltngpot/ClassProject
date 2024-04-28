@@ -137,14 +137,19 @@ public class SchedulePanel extends JPanel {
                 slot.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {  
-                        System.out.println(slot.getId());
+                        if (header.getUser().Id == -1){
+
+                        } else {
                         if(slot.getId() > 0){
                             showEditDialog(slot.getId());
-                            replaceButtons(slot.getId());
+                            InitializeButtons();
+                            updateCalendarDisplay();
+                           // replaceButtons(slot.getId());
                         } else {
                             showCreateDialog();
                         }
                     }
+                }
                 });
             }
         }
@@ -191,7 +196,7 @@ public class SchedulePanel extends JPanel {
 
 
     private void showCreateDialog(){
-        CreateDialog dialog = new CreateDialog(DataRepository);
+        CreateDialog dialog = new CreateDialog(DataRepository, header.getUser().Name);
         dialog.setVisible(true);
         dialog.addComponentListener(new ComponentAdapter() {
             @Override
@@ -260,8 +265,12 @@ public class SchedulePanel extends JPanel {
             */
 
             User user = header.getUser();
-            System.out.println(user.Id);
-            Schedule[] schedules = DataRepository.GetUserSchedule(user.Id);
+            Schedule schedules[];
+            if (user.Id == -1){
+                schedules = DataRepository.GetWeekSchedule(LocalDate.now());
+            } else{
+                schedules = DataRepository.GetUserSchedule(user.Id);
+            }        
             for(Schedule schedule : schedules){
                 try {
                 int dayIndex = getDayIndex(schedule.Start);

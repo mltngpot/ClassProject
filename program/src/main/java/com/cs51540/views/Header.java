@@ -1,5 +1,6 @@
 package com.cs51540.views;
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -18,9 +19,11 @@ public class Header extends JPanel {
         this.DataRepository = DataRepository;
         BorderLayout layout = new BorderLayout();
         setLayout(layout);
-        cb = new JComboBox<>(DataRepository.GetUsers());
+        User[] users = {new User(-1, Color.magenta, "ClientView"),null,null,null,null};
+        System.arraycopy(DataRepository.GetUsers(), 0, users, 1, 4);
+        cb = new JComboBox<>(users);
         add(cb, BorderLayout.EAST);
-        currentUser = new JLabel("Welcome, please select a User!");
+        currentUser = new JLabel("Welcome, you are currently viewing everybodies schedule!");
         add(currentUser, BorderLayout.WEST);
 
     }
@@ -31,6 +34,6 @@ public class Header extends JPanel {
     }
 
     public void changeUserLabel(){
-        currentUser.setText("You are currently viewing: " + getUser() + "'s schedule.");;
+        currentUser.setText("You are currently viewing as the user: " + getUser() + ".");;
         }
 }
