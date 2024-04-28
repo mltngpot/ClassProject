@@ -1,6 +1,7 @@
 package com.cs51540.data;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
@@ -19,10 +20,10 @@ public class ScheduleIO {
     private final String dataDirectory;
     private final IDataRepository dataRepository;
 
-    public ScheduleIO(IDataRepository dataRepository, String dataDirectory) {
+    public ScheduleIO(IDataRepository dataRepository) {
         this.dataRepository = dataRepository;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
-        this.dataDirectory = dataDirectory;
+        this.dataDirectory = new File("").getAbsolutePath();
     }
 
     public void saveUsers() {
