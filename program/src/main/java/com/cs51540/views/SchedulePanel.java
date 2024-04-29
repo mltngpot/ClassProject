@@ -190,11 +190,11 @@ public class SchedulePanel extends JPanel {
         } catch (Exception e) {
             dialog.setVisible(true);
             new ErrorDialog().setVisible(true);
+            dialog.dispose();
         }
     }
 
     private void doUpdateSchedule(EditDialog dialog) {
-        try {
         Schedule schedule = dialog.getSchedule();
         try {
             DataRepository.UpdateSchedule(schedule);
@@ -202,9 +202,14 @@ public class SchedulePanel extends JPanel {
             updateCalendarDisplay();
         } catch (Exception e) {
             dialog.setVisible(true);
-            new ErrorDialog().setVisible(true);            
+            new ErrorDialog().setVisible(true);
+            dialog.dispose();            
+        } finally{
+            dialog.dispose();
+            InitializeButtons();
+            updateCalendarDisplay();
         }
-    }
+}
 
     private void updateCalendarDisplay() {
         User user = header.getUser();
