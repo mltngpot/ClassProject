@@ -84,7 +84,7 @@ public class DataRepository implements IDataRepository {
             for(int j = 0; i < schedules[i].Attendees.size(); i++) {
                 hasMember = hasMember && scheduledUsers.contains(schedules[i].Attendees.get(j));
             }
-            if(!hasMember) 
+            if(hasMember) 
                 throw new Exception("CONFLICT");
         }
     }
